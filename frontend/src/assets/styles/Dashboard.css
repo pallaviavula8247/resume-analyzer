@@ -1,0 +1,443 @@
+/* ===========================================
+   AI Resume Analyzer Dashboard
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===========================================
+   Dashboard Page
+=========================================== */
+
+.dashboard-page{
+    width:100%;
+    min-height:100vh;
+    background:#f4f7fc;
+    padding:30px;
+}
+
+/* ===========================================
+   Header
+=========================================== */
+
+.dashboard-header{
+    margin-bottom:35px;
+}
+
+.welcome-text{
+    font-size:34px;
+    color:#1e293b;
+    font-weight:700;
+    margin-bottom:8px;
+
+    animation:fadeIn .8s ease;
+}
+
+.dashboard-subtitle{
+    color:#64748b;
+    font-size:17px;
+}
+
+/* ===========================================
+   Statistics Cards
+=========================================== */
+
+.cards-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+    gap:22px;
+
+    margin-bottom:35px;
+
+}
+
+/* ===========================================
+   Dashboard Card
+=========================================== */
+
+.dashboard-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:all .35s ease;
+
+    cursor:pointer;
+
+    animation:cardAppear .6s ease;
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 35px rgba(37,99,235,.18);
+
+}
+
+.card-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.card-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:24px;
+
+    transition:.35s;
+
+}
+
+.dashboard-card:hover .card-icon{
+
+    transform:rotate(10deg) scale(1.15);
+
+}
+
+.dashboard-card h3{
+
+    color:#64748b;
+
+    font-size:17px;
+
+    margin-top:15px;
+
+}
+
+.dashboard-card h2{
+
+    font-size:32px;
+
+    margin-top:12px;
+
+    color:#2563eb;
+
+    font-weight:700;
+
+}
+
+/* ===========================================
+   Dashboard Grid
+=========================================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:25px;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========================================
+   Bottom Grid
+=========================================== */
+
+.bottom-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:25px;
+
+}
+
+/* ===========================================
+   Dashboard Box
+=========================================== */
+
+.dashboard-box{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.dashboard-box:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.15);
+
+}
+
+.dashboard-box h2{
+
+    margin-bottom:20px;
+
+    color:#1e293b;
+
+}
+
+/* ===========================================
+   Chart Placeholder
+=========================================== */
+
+.chart-placeholder{
+
+    height:260px;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    color:#64748b;
+
+    background:#f8fafc;
+
+}
+
+/* ===========================================
+   Recent Activity
+=========================================== */
+
+.dashboard-box ul{
+
+    list-style:none;
+
+}
+
+.dashboard-box ul li{
+
+    padding:14px 0;
+
+    border-bottom:1px solid #e2e8f0;
+
+    color:#475569;
+
+    transition:.3s;
+
+}
+
+.dashboard-box ul li:last-child{
+
+    border-bottom:none;
+
+}
+
+.dashboard-box ul li:hover{
+
+    padding-left:12px;
+
+    color:#2563eb;
+
+}
+
+/* ===========================================
+   Job Match
+=========================================== */
+
+.job-match-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #e2e8f0;
+
+}
+
+.job-match-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.match-score{
+
+    color:#16a34a;
+
+    font-weight:bold;
+
+}
+
+/* ===========================================
+   Buttons
+=========================================== */
+
+.dashboard-box button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.dashboard-box button:hover{
+
+    background:#1d4ed8;
+
+    transform:scale(1.04);
+
+}
+
+.dashboard-box button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ===========================================
+   Animations
+=========================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes cardAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================================
+   Responsive
+=========================================== */
+
+@media(max-width:1024px){
+
+.dashboard-grid,
+.bottom-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.dashboard-page{
+
+padding:20px;
+
+}
+
+.cards-container{
+
+grid-template-columns:1fr;
+
+}
+
+.welcome-text{
+
+font-size:28px;
+
+}
+
+.dashboard-card{
+
+padding:20px;
+
+}
+
+.dashboard-box{
+
+padding:20px;
+
+}
+
+}

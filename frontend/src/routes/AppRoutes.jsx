@@ -9,19 +9,23 @@ import Dashboard from "../pages/Dashboard";
 import UploadResume from "../pages/UploadResume";
 import AnalysisResult from "../pages/AnalysisResult";
 import Reports from "../pages/Reports";
+import Profile from "../pages/Profile";
+import Recommendations from "../pages/Recommendations";
+import JobMatch from "../pages/JobMatch";
 import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
+      <Routes>
 
-          <Route path="/" element={<Home />} />
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-          <Route path="/login" element={<Login />} />
-
-          <Route path="/register" element={<Register />} />
+        {/* Protected Routes with Navbar */}
+        <Route element={<Layout />}>
 
           <Route path="/dashboard" element={<Dashboard />} />
 
@@ -29,12 +33,23 @@ const AppRoutes = () => {
 
           <Route path="/analysis" element={<AnalysisResult />} />
 
+          <Route path="/job-match" element={<JobMatch />} />
+
+          <Route
+            path="/recommendations"
+            element={<Recommendations />}
+          />
+
           <Route path="/reports" element={<Reports />} />
 
-          <Route path="*" element={<NotFound />} />
+          <Route path="/profile" element={<Profile />} />
 
-        </Routes>
-      </Layout>
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+
+      </Routes>
     </BrowserRouter>
   );
 };

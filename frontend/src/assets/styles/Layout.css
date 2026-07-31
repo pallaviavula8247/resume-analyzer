@@ -1,0 +1,14 @@
+.layout {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.layout-body {
+  display: flex;
+}
+
+.page-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}

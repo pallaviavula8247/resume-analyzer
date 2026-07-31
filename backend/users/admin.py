@@ -1,24 +1,29 @@
 from django.contrib import admin
-from .models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-
     list_display = (
         "id",
         "full_name",
         "email",
-        "is_staff",
+        "phone",
         "is_active",
-        "created_at",
+        "date_joined",
     )
 
     search_fields = (
         "full_name",
         "email",
+        "phone",
     )
 
-    ordering = (
-        "id",
+    list_filter = (
+        "is_active",
+        "is_staff",
     )
+
+    ordering = ("-date_joined",)

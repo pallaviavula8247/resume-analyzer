@@ -8,7 +8,7 @@ function Navbar() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const logout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
@@ -28,18 +28,13 @@ function Navbar() {
         <FaBell className="navbar-icon" />
 
         <div className="navbar-user">
-
           <FaUserCircle className="user-icon" />
-
-          <span>
-            {user?.full_name || "User"}
-          </span>
-
+          <span>{user?.full_name || "User"}</span>
         </div>
 
         <button
           className="logout-btn"
-          onClick={logout}
+          onClick={handleLogout}
         >
           Logout
         </button>

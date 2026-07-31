@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
 
 const Register = () => {
-
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     full_name: "",
     email: "",
+    phone: "",
     password: "",
   });
 
@@ -39,48 +39,35 @@ const Register = () => {
       setForm({
         full_name: "",
         email: "",
+        phone: "",
         password: "",
       });
 
       // Redirect to Login page
       navigate("/login");
-
     } catch (error) {
-
       console.error("Registration Error:", error.response?.data);
 
       if (error.response?.data) {
-
         if (typeof error.response.data === "object") {
-
           const messages = Object.entries(error.response.data)
             .map(([field, message]) => `${field}: ${message}`)
             .join(", ");
 
           setError(messages);
-
         } else {
-
           setError(error.response.data);
-
         }
-
       } else {
-
         setError("Registration failed. Please try again.");
-
       }
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
   return (
     <div className="auth-container">
-
       <h1>Create Account</h1>
 
       <p>Register to start analyzing your resume.</p>
@@ -98,7 +85,6 @@ const Register = () => {
       )}
 
       <form onSubmit={handleSubmit}>
-
         <input
           type="text"
           name="full_name"
@@ -118,6 +104,15 @@ const Register = () => {
         />
 
         <input
+          type="text"
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
+          onChange={handleChange}
+          required
+        />
+
+        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -126,15 +121,10 @@ const Register = () => {
           required
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-        >
+        <button type="submit" disabled={loading}>
           {loading ? "Creating Account..." : "Register"}
         </button>
-
       </form>
-
     </div>
   );
 };
