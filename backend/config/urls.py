@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 
 def home(request):
     """
-    Home API
+    Resume Analyzer Backend API Home
     """
     return JsonResponse(
         {
@@ -17,16 +17,36 @@ def home(request):
             "developer": "Pallavi Avula",
             "description": "AI Powered Resume Analyzer Backend API",
             "available_endpoints": {
+                "home": "/",
                 "admin": "/admin/",
-                "register": "/api/users/register/",
-                "login": "/api/users/login/",
-                "refresh_token": "/api/users/token/refresh/",
-                "profile": "/api/users/profile/",
-                "resume_upload": "/api/parser/upload/",
-                "job_match": "/api/analyzer/match/<resume_id>/",
-                "recommendations": "/api/recommendation/",
-                "dashboard": "/api/dashboard/",
-                "reports": "/api/reports/",
+
+                "users": {
+                    "register": "/api/users/register/",
+                    "login": "/api/users/login/",
+                    "refresh_token": "/api/users/token/refresh/",
+                    "profile": "/api/users/profile/",
+                },
+
+                "parser": {
+                    "upload_resume": "/api/parser/upload/",
+                },
+
+                "analyzer": {
+                    "ats_analysis": "/api/analyzer/analyze/<resume_id>/",
+                    "job_matching": "/api/analyzer/match/<resume_id>/",
+                },
+
+                "recommendation": {
+                    "ai_recommendations": "/api/recommendation/<resume_id>/",
+                },
+
+                "dashboard": {
+                    "dashboard_api": "/api/dashboard/",
+                },
+
+                "reports": {
+                    "reports_api": "/api/reports/",
+                },
             },
         }
     )
@@ -34,51 +54,61 @@ def home(request):
 
 urlpatterns = [
 
+    # ==========================
     # Home
-    path("", home),
+    # ==========================
+    path("", home, name="home"),
 
+    # ==========================
     # Django Admin
+    # ==========================
     path("admin/", admin.site.urls),
 
-    # User Authentication
+    # ==========================
+    # User Authentication APIs
+    # ==========================
     path("api/users/", include("users.urls")),
 
-    # Resume Parser
+    # ==========================
+    # Resume Parser APIs
+    # ==========================
     path("api/parser/", include("parser.urls")),
 
-    # Resume Analyzer / Job Matching
+    # ==========================
+    # ATS Analysis & Job Matching
+    # ==========================
     path("api/analyzer/", include("analyzer.urls")),
 
-    # AI Recommendations
+    # ==========================
+    # AI Recommendation APIs
+    # ==========================
     path("api/recommendation/", include("recommendation.urls")),
 
-    # Dashboard
+    # ==========================
+    # Dashboard APIs
+    # ==========================
     path("api/dashboard/", include("dashboard.urls")),
 
-    # Reports
+    # ==========================
+    # Reports APIs
+    # ==========================
     path("api/reports/", include("reports.urls")),
-
-     path(
-        "api/users/",
-        include("users.urls"),
-    ),
 ]
 
 
 # ==========================================
-# Serve Media Files (Development Only)
+# Media Files (Development Only)
 # ==========================================
-
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
 
-# ==========================================
-# Serve Static Files (Development Only)
-# ==========================================
 
+# ==========================================
+# Static Files (Development Only)
+# ==========================================
 if settings.DEBUG:
     urlpatterns += static(
         settings.STATIC_URL,

@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import settings
+from parser.models import Resume
 
 
 class Recommendation(models.Model):
@@ -7,50 +7,40 @@ class Recommendation(models.Model):
     Stores AI-generated recommendations for a resume.
     """
 
-    PRIORITY_CHOICES = [
-        ("High", "High"),
-        ("Medium", "Medium"),
-        ("Low", "Low"),
-    ]
-
-    CATEGORY_CHOICES = [
-        ("Profile", "Profile"),
-        ("Skills", "Skills"),
-        ("Education", "Education"),
-        ("Experience", "Experience"),
-        ("Projects", "Projects"),
-        ("Certifications", "Certifications"),
-        ("ATS", "ATS"),
-        ("General", "General"),
-    ]
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+    resume = models.OneToOneField(
+        Resume,
         on_delete=models.CASCADE,
-        related_name="recommendations",
+        related_name="recommendation",
     )
 
-    resume = models.ForeignKey(
-        "parser.Resume",
-        on_delete=models.CASCADE,
-        related_name="recommendations",
+    recommended_roles = models.JSONField(
+        default=list,
+        blank=True,
     )
 
-    category = models.CharField(
-        max_length=30,
-        choices=CATEGORY_CHOICES,
+    recommended_skills = models.JSONField(
+        default=list,
+        blank=True,
     )
 
-    priority = models.CharField(
-        max_length=10,
-        choices=PRIORITY_CHOICES,
-        default="Medium",
+    recommended_courses = models.JSONField(
+        default=list,
+        blank=True,
     )
 
-    message = models.TextField()
+    recommended_projects = models.JSONField(
+        default=list,
+        blank=True,
+    )
 
-    is_resolved = models.BooleanField(
-        default=False,
+    learning_roadmap = models.JSONField(
+        default=list,
+        blank=True,
+    )
+
+    resume_tips = models.JSONField(
+        default=list,
+        blank=True,
     )
 
     created_at = models.DateTimeField(
@@ -63,6 +53,8 @@ class Recommendation(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Recommendation"
+        verbose_name_plural = "Recommendations"
 
     def __str__(self):
-        return f"{self.resume.id} - {self.category} - {self.priority}"
+        return f"Recommendations - {self.resume.full_name}"
