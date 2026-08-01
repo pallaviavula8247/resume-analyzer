@@ -4,27 +4,17 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from parser.models import Resume
-from .models import JobMatch
-from .matcher import match_resume
-from .serializers import JobDescriptionSerializer
+
+from .models import ATSAnalysis
+from .services.ats import analyze_resume
+from .serializers import ATSAnalysisSerializer
 
 
-class JobMatchView(APIView):
-    """
-    Match uploaded resume with a job description.
-    """
+class AnalyzeResumeView(APIView):
 
     permission_classes = [IsAuthenticated]
 
     def post(self, request, resume_id):
-
-        serializer = JobDescriptionSerializer(data=request.data)
-
-        if not serializer.is_valid():
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
-            )
 
         try:
             resume = Resume.objects.get(
@@ -33,6 +23,7 @@ class JobMatchView(APIView):
             )
 
         except Resume.DoesNotExist:
+
             return Response(
                 {
                     "success": False,
@@ -41,53 +32,32 @@ class JobMatchView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # Run matching engine
-        result = match_resume(
-            {
-                "skills": resume.skills
-            },
-            serializer.validated_data["job_description"],
-        )
+        try:
 
-        # Save result into database
-        job_match = JobMatch.objects.create(
-            resume=resume,
-            job_title="Software Engineer",
-            job_description=serializer.validated_data["job_description"],
+            result = analyze_resume(resume)
 
-            # PositiveIntegerField requires integer
-            match_score=int(result["match_score"]),
+            analysis, created = ATSAnalysis.objects.update_or_create(
+                resume=resume,
+                defaults=result,
+            )
 
-            matched_skills=result["matched_skills"],
-            missing_skills=result["missing_skills"],
+            serializer = ATSAnalysisSerializer(analysis)
 
-            recommendations=[
-                f"Learn {skill}"
-                for skill in result["missing_skills"]
-            ],
-        )
-
-        return Response(
-            {
-                "success": True,
-                "message": "Job matching completed successfully.",
-                "job_match_id": job_match.id,
-                "data": {
-                    "match_score": round(result["match_score"], 2),
-                    "match_level": result["match_level"],
-                    "required_skills": result["required_skills"],
-                    "matched_skills": result["matched_skills"],
-                    "missing_skills": result["missing_skills"],
-                    "extra_skills": result["extra_skills"],
-                    "total_required_skills": result["total_required_skills"],
-                    "matched_count": result["matched_count"],
-                    "missing_count": result["missing_count"],
-                    "extra_count": result["extra_count"],
-                    "recommendations": [
-                        f"Learn {skill}"
-                        for skill in result["missing_skills"]
-                    ],
+            return Response(
+                {
+                    "success": True,
+                    "message": "ATS analysis completed successfully.",
+                    "data": serializer.data,
                 },
-            },
-            status=status.HTTP_200_OK,
-        )
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "error": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )

@@ -1,45 +1,65 @@
 from django.db import models
-
 from parser.models import Resume
 
 
-class JobMatch(models.Model):
+class ATSAnalysis(models.Model):
+    """
+    Stores ATS analysis results for a parsed resume.
+    """
 
-    resume = models.ForeignKey(
+    resume = models.OneToOneField(
         Resume,
         on_delete=models.CASCADE,
-        related_name="job_matches",
+        related_name="ats_analysis",
     )
 
-    job_title = models.CharField(
-        max_length=200,
+    # Overall ATS Score
+    ats_score = models.PositiveIntegerField(default=0)
+
+    # Individual Scores
+    keyword_score = models.PositiveIntegerField(default=0)
+    skill_score = models.PositiveIntegerField(default=0)
+    education_score = models.PositiveIntegerField(default=0)
+    experience_score = models.PositiveIntegerField(default=0)
+    project_score = models.PositiveIntegerField(default=0)
+    certification_score = models.PositiveIntegerField(default=0)
+    format_score = models.PositiveIntegerField(default=0)
+
+    # Analysis Results
+    strengths = models.JSONField(
+        default=list,
         blank=True,
     )
 
-    job_description = models.TextField()
-
-    match_score = models.FloatField(
-        default=0,
-    )
-
-    matched_skills = models.JSONField(
+    weaknesses = models.JSONField(
         default=list,
+        blank=True,
     )
 
     missing_skills = models.JSONField(
         default=list,
+        blank=True,
     )
 
     recommendations = models.JSONField(
         default=list,
+        blank=True,
     )
 
-    created_at = models.DateTimeField(
+    # Timestamps
+    analyzed_at = models.DateTimeField(
         auto_now_add=True,
     )
 
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-analyzed_at"]
+        verbose_name = "ATS Analysis"
+        verbose_name_plural = "ATS Analyses"
 
     def __str__(self):
-        return f"{self.resume.full_name} - {self.match_score}%"
+        name = self.resume.full_name or self.resume.email or "Unknown User"
+        return f"{name} - ATS Score: {self.ats_score}%"

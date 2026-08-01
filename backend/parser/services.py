@@ -1,194 +1,265 @@
-import re
+"""
+Resume Parsing Service
 
-from .skills import extract_skills
-from .education import extract_education
-from .experience import extract_experience
-from .projects import extract_projects
+Combines all parser modules and returns
+structured resume information.
+"""
 
-
-# ==========================================
-# Extract Email
-# ==========================================
-
-def extract_email(text):
-    pattern = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
-    match = re.search(pattern, text)
-    return match.group(0) if match else ""
+from parser.parsers.personal import extract_personal_info
+from parser.parsers.skills import extract_skills
+from parser.parsers.education import extract_education
+from parser.parsers.experience import extract_experience
+from parser.parsers.projects import extract_projects
+from parser.parsers.certifications import extract_certifications
+from parser.parsers.languages import extract_languages
 
 
-# ==========================================
-# Extract Phone Number
-# ==========================================
+def calculate_ats_score(
+    skills,
+    education,
+    experience,
+    projects,
+    certifications,
+):
+    """
+    Calculate a basic ATS score.
+    """
 
-def extract_phone(text):
-    pattern = r"(\+91[\s-]?)?[6-9]\d{9}"
-    match = re.search(pattern, text)
-    return match.group(0) if match else ""
+    score = 0
+
+    # Skills (40 Marks)
+
+    score += min(len(skills) * 4, 40)
+
+    # Education (20 Marks)
+
+    if education:
+        score += 20
+
+    # Experience (15 Marks)
+
+    if experience:
+        score += 15
+
+    # Projects (15 Marks)
+
+    if projects:
+        score += 15
+
+    # Certifications (10 Marks)
+
+    if certifications:
+        score += 10
+
+    return min(score, 100)
 
 
-# ==========================================
-# Extract Name
-# ==========================================
+def get_missing_skills(skills):
+    """
+    Placeholder for future Job Matching.
+    """
 
-def extract_name(text):
-
-    lines = [
-        line.strip()
-        for line in text.splitlines()
-        if line.strip()
+    REQUIRED_SKILLS = [
+        "Python",
+        "SQL",
+        "Git",
+        "REST API",
+        "Docker",
     ]
 
-    for line in lines[:5]:
+    missing = []
 
-        if (
-            len(line.split()) <= 4
-            and "@" not in line
-            and not any(char.isdigit() for char in line)
-        ):
-            return line
+    for skill in REQUIRED_SKILLS:
 
-    return ""
+        if skill not in skills:
+            missing.append(skill)
+
+    return missing
 
 
-# ==========================================
-# Extract LinkedIn
-# ==========================================
+def generate_recommendations(
+    ats_score,
+    missing_skills,
+    projects,
+    certifications,
+):
+    """
+    Generate resume recommendations.
+    """
 
-def extract_linkedin(text):
+    recommendations = []
 
-    pattern = r"https?://(?:www\.)?linkedin\.com/[^\s]+"
+    if ats_score < 60:
 
-    match = re.search(pattern, text)
+        recommendations.append(
+            "Improve your resume by adding more technical skills."
+        )
 
-    return match.group(0) if match else ""
+    if missing_skills:
 
+        recommendations.append(
+            "Learn these important skills: "
+            + ", ".join(missing_skills)
+        )
 
-# ==========================================
-# Extract GitHub
-# ==========================================
+    if not projects:
 
-def extract_github(text):
+        recommendations.append(
+            "Include academic or personal projects."
+        )
 
-    pattern = r"https?://(?:www\.)?github\.com/[^\s]+"
+    if not certifications:
 
-    match = re.search(pattern, text)
+        recommendations.append(
+            "Add professional certifications."
+        )
 
-    return match.group(0) if match else ""
+    if ats_score >= 80:
 
+        recommendations.append(
+            "Excellent resume. Keep it updated."
+        )
 
-# ==========================================
-# Extract Portfolio
-# ==========================================
+    return recommendations
 
-def extract_portfolio(text):
-
-    urls = re.findall(r"https?://[^\s]+", text)
-
-    for url in urls:
-
-        lower = url.lower()
-
-        if (
-            "github" not in lower
-            and "linkedin" not in lower
-        ):
-            return url
-
-    return ""
-
-
-# ==========================================
-# Extract Location
-# ==========================================
-
-def extract_location(text):
-
-    cities = [
-        "Hyderabad",
-        "Bangalore",
-        "Chennai",
-        "Mumbai",
-        "Delhi",
-        "Pune",
-        "Kolkata",
-        "Visakhapatnam",
-        "Vijayawada",
-        "Tirupati",
-        "Rajampet",
-        "Nellore",
-        "Kurnool",
-    ]
-
-    for city in cities:
-        if city.lower() in text.lower():
-            return city
-
-    return ""
-
-
-# ==========================================
-# Extract Certifications
-# ==========================================
-
-def extract_certifications(text):
-
-    certifications = []
-
-    keywords = [
-        "AWS",
-        "Azure",
-        "Google Cloud",
-        "Oracle",
-        "Cisco",
-        "Microsoft",
-        "NPTEL",
-        "Coursera",
-        "Udemy",
-        "Infosys Springboard",
-        "AICTE",
-    ]
-
-    for keyword in keywords:
-        if keyword.lower() in text.lower():
-            certifications.append(keyword)
-
-    return list(set(certifications))
-
-
-# ==========================================
-# Main Resume Parser
-# ==========================================
 
 def parse_resume(text):
     """
-    Complete Resume Parsing Pipeline
+    Parse complete resume.
     """
 
-    data = {}
-
+    # -----------------------------
     # Personal Information
-    data["full_name"] = extract_name(text)
-    data["email"] = extract_email(text)
-    data["phone"] = extract_phone(text)
-    data["location"] = extract_location(text)
-    data["linkedin"] = extract_linkedin(text)
-    data["github"] = extract_github(text)
-    data["portfolio"] = extract_portfolio(text)
+    # -----------------------------
 
-    # Resume Sections
-    data["skills"] = extract_skills(text)
-    data["education"] = extract_education(text)
-    data["experience"] = extract_experience(text)
-    data["projects"] = extract_projects(text)
-    data["certifications"] = extract_certifications(text)
+    personal = extract_personal_info(text)
 
-    # Placeholder (implemented later)
-    data["languages"] = []
-    data["ats_score"] = 0
-    data["missing_skills"] = []
-    data["recommendations"] = []
+    # -----------------------------
+    # Skills
+    # -----------------------------
 
-    # Raw Resume Text
-    data["raw_text"] = text
+    skills = extract_skills(text)
 
-    return data
+    # -----------------------------
+    # Education
+    # -----------------------------
+
+    education = extract_education(text)
+
+    # -----------------------------
+    # Experience
+    # -----------------------------
+
+    experience = extract_experience(text)
+
+    # -----------------------------
+    # Projects
+    # -----------------------------
+
+    projects = extract_projects(text)
+
+    # -----------------------------
+    # Certifications
+    # -----------------------------
+
+    certifications = extract_certifications(text)
+
+    # -----------------------------
+    # Languages
+    # -----------------------------
+
+    languages = extract_languages(text)
+
+    # -----------------------------
+    # ATS Score
+    # -----------------------------
+
+    ats_score = calculate_ats_score(
+        skills,
+        education,
+        experience,
+        projects,
+        certifications,
+    )
+
+    # -----------------------------
+    # Missing Skills
+    # -----------------------------
+
+    missing_skills = get_missing_skills(
+        skills
+    )
+
+    # -----------------------------
+    # AI Recommendations
+    # -----------------------------
+
+    recommendations = generate_recommendations(
+        ats_score,
+        missing_skills,
+        projects,
+        certifications,
+    )
+
+    # -----------------------------
+    # Final JSON
+    # -----------------------------
+
+    return {
+
+        # Personal Information
+        "full_name": personal.get(
+            "full_name",
+            "",
+        ),
+
+        "email": personal.get(
+            "email",
+            "",
+        ),
+
+        "phone": personal.get(
+            "phone",
+            "",
+        ),
+
+        "location": personal.get(
+            "location",
+            "",
+        ),
+
+        "linkedin": personal.get(
+            "linkedin",
+            "",
+        ),
+
+        "github": personal.get(
+            "github",
+            "",
+        ),
+
+        "portfolio": personal.get(
+            "portfolio",
+            "",
+        ),
+
+        # Resume Sections
+        "skills": skills,
+
+        "education": education,
+
+        "experience": experience,
+
+        "projects": projects,
+
+        "certifications": certifications,
+
+        "languages": languages,
+
+        # Analysis
+        "ats_score": ats_score,
+
+        "missing_skills": missing_skills,
+
+        "recommendations": recommendations,
+    }

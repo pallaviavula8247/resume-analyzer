@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "recommendation",
     "reports",
     "dashboard",
+    "resume",
 ]
 
 # --------------------------------------------------
