@@ -1,36 +1,38 @@
 from rest_framework import serializers
-from .models import ATSAnalysis
+from .models import ATSAnalysis, JobMatch
 
 
 class ATSAnalysisSerializer(serializers.ModelSerializer):
-    """
-    Serializer for ATS Analysis results.
-    """
-
     class Meta:
         model = ATSAnalysis
+        fields = "__all__"
+        read_only_fields = "__all__"
 
-        fields = [
-            "id",
+
+class JobMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobMatch
+        fields = "__all__"
+        read_only_fields = (
             "resume",
-
-            "ats_score",
-
-            "keyword_score",
-            "skill_score",
-            "education_score",
-            "experience_score",
-            "project_score",
-            "certification_score",
-            "format_score",
-
-            "strengths",
-            "weaknesses",
+            "match_score",
+            "match_level",
+            "matched_skills",
             "missing_skills",
+            "extra_skills",
             "recommendations",
-
-            "analyzed_at",
+            "created_at",
             "updated_at",
-        ]
+        )
 
-        read_only_fields = fields
+
+class JobDescriptionSerializer(serializers.Serializer):
+    job_title = serializers.CharField(
+        max_length=255,
+        required=False,
+        allow_blank=True,
+    )
+
+    job_description = serializers.CharField(
+        required=True,
+    )

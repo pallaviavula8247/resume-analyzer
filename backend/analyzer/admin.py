@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ATSAnalysis
+from .models import ATSAnalysis, JobMatch
 
 
 @admin.register(ATSAnalysis)
@@ -12,12 +12,21 @@ class ATSAnalysisAdmin(admin.ModelAdmin):
         "analyzed_at",
     )
 
-    search_fields = (
-        "resume__full_name",
-        "resume__email",
+    list_filter = (
+        "analyzed_at",
+    )
+
+
+@admin.register(JobMatch)
+class JobMatchAdmin(admin.ModelAdmin):
+    list_display = (
+        "resume",
+        "job_title",
+        "match_score",
+        "match_level",
+        "created_at",
     )
 
     list_filter = (
-        "ats_score",
-        "analyzed_at",
+        "created_at",
     )
