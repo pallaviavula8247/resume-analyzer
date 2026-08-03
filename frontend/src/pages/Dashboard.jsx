@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import {
   FaUpload,
   FaFileAlt,
@@ -15,89 +14,245 @@ import JobMatchPreview from "../components/dashboard/JobMatchPreview";
 import RecentActivity from "../components/dashboard/RecentActivity";
 import QuickActions from "../components/dashboard/QuickActions";
 
-import { getProfile } from "../services/authService";
+import { getDashboard } from "../services/dashboardService";
+import { downloadReport } from "../services/reportService";
 
 import "../assets/styles/Dashboard.css";
 
 function Dashboard() {
-  const [user, setUser] = useState(null);
+
+  const [dashboard, setDashboard] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadProfile = async () => {
+
+    const loadDashboard = async () => {
+
       try {
-        const data = await getProfile();
-        setUser(data);
+
+        const response = await getDashboard();
+
+        setDashboard(response.data);
+
       } catch (error) {
-        console.error("Failed to load profile:", error);
+
+        console.error(
+          "Failed to load dashboard:",
+          error
+        );
+
+      } finally {
+
+        setLoading(false);
+
       }
+
     };
 
-    loadProfile();
+    loadDashboard();
+
   }, []);
 
+  const resumeId =
+    dashboard?.latest_resume_id;
+
+
+  /**
+   * Download Resume PDF
+   */
+  const handleDownload = async () => {
+
+    if (!resumeId) {
+
+      alert("No resume available.");
+
+      return;
+
+    }
+
+    try {
+
+      const response =
+        await downloadReport(resumeId);
+
+      const pdfBlob = new Blob(
+        [response.data],
+        {
+          type: "application/pdf",
+        }
+      );
+
+      const downloadUrl =
+        window.URL.createObjectURL(pdfBlob);
+
+      const link =
+        document.createElement("a");
+
+      link.href = downloadUrl;
+
+      link.download =
+        "AI_Resume_Analysis_Report.pdf";
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(
+        downloadUrl
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Download Failed:",
+        error
+      );
+
+      alert(
+        "Unable to download report."
+      );
+
+    }
+
+  };
+
+
+  if (loading) {
+
+    return (
+
+      <div className="dashboard-page">
+
+        <h2>Loading Dashboard...</h2>
+
+      </div>
+
+    );
+
+  }
+
+
   return (
+
     <div className="dashboard-page">
 
-      {/* Welcome Section */}
+      {/* ========================= */}
+      {/* Header */}
+      {/* ========================= */}
+
       <div className="dashboard-header">
 
         <h1 className="welcome-text">
-          Welcome, {user?.full_name || "User"} 👋
+
+          Welcome,
+          {" "}
+          {dashboard?.user?.full_name || "User"} 👋
+
         </h1>
 
         <p className="dashboard-subtitle">
+
           AI Powered Resume Analyzer Dashboard
+
         </p>
 
       </div>
 
-      {/* Statistics Cards */}
+
+      {/* ========================= */}
+      {/* Statistics */}
+      {/* ========================= */}
+
       <div className="cards-container">
 
         <DashboardCard
           title="Uploaded Resumes"
-          value="3"
+          value={
+            dashboard?.statistics?.total_resumes ?? 0
+          }
           icon={<FaUpload />}
           color="#7C3AED"
         />
 
-        <ATSCard />
+        <ATSCard
+          ats={dashboard?.ats}
+        />
 
-        <ScoreCard />
+        <ScoreCard
+          statistics={
+            dashboard?.statistics
+          }
+        />
 
-        <SkillCard />
+        <SkillCard
+          ats={dashboard?.ats}
+        />
 
-        <JobMatchCard />
+        <JobMatchCard
+          jobMatches={
+            dashboard?.job_matches
+          }
+        />
 
         <DashboardCard
-          title="Reports"
-          value="5"
+          title="Recommendations"
+          value={
+            dashboard?.statistics
+              ?.total_recommendations ?? 0
+          }
           icon={<FaFileAlt />}
           color="#F59E0B"
         />
 
       </div>
 
-      {/* Charts Section */}
+
+      {/* ========================= */}
+      {/* Charts */}
+      {/* ========================= */}
+
       <div className="dashboard-grid">
 
-        <ATSChart />
+        <ATSChart
+          chartData={
+            dashboard?.charts?.ats_chart
+          }
+        />
 
-        <JobMatchPreview />
+        <JobMatchPreview
+          jobs={
+            dashboard?.job_matches
+          }
+        />
 
       </div>
 
-      {/* Bottom Section */}
+
+      {/* ========================= */}
+      {/* Bottom */}
+      {/* ========================= */}
+
       <div className="bottom-grid">
 
-        <RecentActivity />
+        <RecentActivity
+          activities={
+            dashboard?.recent_activity
+          }
+        />
 
-        <QuickActions />
+        <QuickActions
+          onDownload={handleDownload}
+        />
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default Dashboard;

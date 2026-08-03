@@ -1,3 +1,9 @@
+"""
+dashboard/views.py
+
+Dashboard APIs for Resume Analyzer.
+"""
+
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,24 +20,40 @@ from .serializers import DashboardSerializer
 class DashboardView(APIView):
     """
     GET /api/dashboard/
+
+    Returns complete dashboard data for the logged-in user.
     """
 
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
-        data = get_dashboard_data(request.user)
+        try:
 
-        serializer = DashboardSerializer(data)
+            dashboard_data = get_dashboard_data(request.user)
 
-        return Response(
-            {
-                "success": True,
-                "message": "Dashboard data retrieved successfully.",
-                "data": serializer.data,
-            },
-            status=status.HTTP_200_OK,
-        )
+            serializer = DashboardSerializer(
+                dashboard_data
+            )
+
+            return Response(
+                {
+                    "success": True,
+                    "message": "Dashboard loaded successfully.",
+                    "data": serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class ResumeHistoryView(APIView):
@@ -43,16 +65,28 @@ class ResumeHistoryView(APIView):
 
     def get(self, request):
 
-        history = get_resume_history(request.user)
+        try:
 
-        return Response(
-            {
-                "success": True,
-                "count": len(history),
-                "data": history,
-            },
-            status=status.HTTP_200_OK,
-        )
+            history = get_resume_history(request.user)
+
+            return Response(
+                {
+                    "success": True,
+                    "count": len(history),
+                    "data": history,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class ResumeDetailView(APIView):
@@ -64,28 +98,40 @@ class ResumeDetailView(APIView):
 
     def get(self, request, resume_id):
 
-        data = get_resume_detail(
-            request.user,
-            resume_id,
-        )
+        try:
 
-        if data is None:
+            resume = get_resume_detail(
+                request.user,
+                resume_id,
+            )
+
+            if resume is None:
+
+                return Response(
+                    {
+                        "success": False,
+                        "message": "Resume not found.",
+                    },
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            return Response(
+                {
+                    "success": True,
+                    "data": resume,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
 
             return Response(
                 {
                     "success": False,
-                    "message": "Resume not found.",
+                    "message": str(e),
                 },
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
-        return Response(
-            {
-                "success": True,
-                "data": data,
-            },
-            status=status.HTTP_200_OK,
-        )
 
 
 class DeleteResumeView(APIView):
@@ -97,25 +143,37 @@ class DeleteResumeView(APIView):
 
     def delete(self, request, resume_id):
 
-        deleted = delete_resume(
-            request.user,
-            resume_id,
-        )
+        try:
 
-        if not deleted:
+            deleted = delete_resume(
+                request.user,
+                resume_id,
+            )
+
+            if not deleted:
+
+                return Response(
+                    {
+                        "success": False,
+                        "message": "Resume not found.",
+                    },
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            return Response(
+                {
+                    "success": True,
+                    "message": "Resume deleted successfully.",
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
 
             return Response(
                 {
                     "success": False,
-                    "message": "Resume not found.",
+                    "message": str(e),
                 },
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
-        return Response(
-            {
-                "success": True,
-                "message": "Resume deleted successfully.",
-            },
-            status=status.HTTP_200_OK,
-        )

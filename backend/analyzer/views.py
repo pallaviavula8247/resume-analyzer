@@ -16,10 +16,51 @@ from .serializers import (
 
 class AnalyzeResumeView(APIView):
     """
-    Analyze a parsed resume and generate ATS results.
+    POST -> Generate ATS Analysis
+    GET  -> Retrieve Existing ATS Analysis
     """
 
     permission_classes = [IsAuthenticated]
+
+    def get(self, request, resume_id):
+
+        try:
+            resume = Resume.objects.get(
+                id=resume_id,
+                user=request.user,
+            )
+
+            analysis = ATSAnalysis.objects.get(
+                resume=resume,
+            )
+
+        except Resume.DoesNotExist:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Resume not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        except ATSAnalysis.DoesNotExist:
+            return Response(
+                {
+                    "success": False,
+                    "message": "ATS Analysis not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = ATSAnalysisSerializer(analysis)
+
+        return Response(
+            {
+                "success": True,
+                "data": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
 
     def post(self, request, resume_id):
 
@@ -59,30 +100,23 @@ class AnalyzeResumeView(APIView):
 
 class JobMatchView(APIView):
     """
-    Match a resume against a job description.
+    POST -> Generate Job Match
+    GET  -> Retrieve All Job Matches
     """
 
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, resume_id):
-
-        serializer = JobDescriptionSerializer(
-            data=request.data
-        )
-
-        if not serializer.is_valid():
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get(self, request, resume_id):
 
         try:
+
             resume = Resume.objects.get(
                 id=resume_id,
                 user=request.user,
             )
 
         except Resume.DoesNotExist:
+
             return Response(
                 {
                     "success": False,
@@ -91,18 +125,65 @@ class JobMatchView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # Resume Data
+        matches = (
+            JobMatch.objects
+            .filter(resume=resume)
+            .order_by("-created_at")
+        )
+
+        serializer = JobMatchSerializer(
+            matches,
+            many=True,
+        )
+
+        return Response(
+            {
+                "success": True,
+                "count": matches.count(),
+                "data": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    def post(self, request, resume_id):
+
+        serializer = JobDescriptionSerializer(
+            data=request.data
+        )
+
+        if not serializer.is_valid():
+
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+
+            resume = Resume.objects.get(
+                id=resume_id,
+                user=request.user,
+            )
+
+        except Resume.DoesNotExist:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Resume not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
         resume_data = {
             "skills": resume.skills,
         }
 
-        # AI Matching
         result = match_resume(
             resume_data,
             serializer.validated_data["job_description"],
         )
 
-        # Save Match Result
         job_match = JobMatch.objects.create(
             resume=resume,
             job_title=serializer.validated_data.get(

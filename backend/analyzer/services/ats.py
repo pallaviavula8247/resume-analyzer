@@ -9,52 +9,90 @@ from .suggestions import generate_suggestions
 
 def analyze_resume(resume):
     """
-    Perform complete ATS analysis for a resume.
-
-    Returns a dictionary compatible with the ATSAnalysis model.
+    Analyze a resume and return data compatible
+    with the ATSAnalysis model.
     """
 
-    # -----------------------------
-    # Calculate Scores
-    # -----------------------------
+    # ----------------------------------------
+    # Score Calculation
+    # ----------------------------------------
     score_data = calculate_ats_score(resume)
 
-    # -----------------------------
-    # Analyze Resume
-    # -----------------------------
+    # ----------------------------------------
+    # Strength / Weakness Analysis
+    # ----------------------------------------
     analysis = analyze_strengths(resume)
 
-    # -----------------------------
-    # Generate Suggestions
-    # -----------------------------
+    # ----------------------------------------
+    # AI Recommendations
+    # ----------------------------------------
     recommendations = generate_suggestions(
         resume,
         analysis,
     )
 
-    # -----------------------------
-    # Merge Everything
-    # -----------------------------
-    result = {
-        # Overall Score
-        "ats_score": score_data["ats_score"],
+    return {
+
+        # Overall ATS Score
+        "ats_score": score_data.get(
+            "ats_score",
+            0,
+        ),
 
         # Individual Scores
-        "keyword_score": score_data["keyword_score"],
-        "skill_score": score_data["skill_score"],
-        "education_score": score_data["education_score"],
-        "experience_score": score_data["experience_score"],
-        "project_score": score_data["project_score"],
-        "certification_score": score_data["certification_score"],
-        "format_score": score_data["format_score"],
+        "keyword_score": score_data.get(
+            "keyword_score",
+            0,
+        ),
+
+        "skill_score": score_data.get(
+            "skill_score",
+            0,
+        ),
+
+        "education_score": score_data.get(
+            "education_score",
+            0,
+        ),
+
+        "experience_score": score_data.get(
+            "experience_score",
+            0,
+        ),
+
+        "project_score": score_data.get(
+            "project_score",
+            0,
+        ),
+
+        "certification_score": score_data.get(
+            "certification_score",
+            0,
+        ),
+
+        "format_score": score_data.get(
+            "format_score",
+            0,
+        ),
 
         # Analysis
-        "strengths": analysis["strengths"],
-        "weaknesses": analysis["weaknesses"],
-        "missing_skills": analysis["missing_skills"],
+        "strengths": analysis.get(
+            "strengths",
+            [],
+        ),
+
+        "weaknesses": analysis.get(
+            "weaknesses",
+            [],
+        ),
+
+        "missing_skills": analysis.get(
+            "missing_skills",
+            [],
+        ),
 
         # Recommendations
-        "recommendations": recommendations,
+        "recommendations": recommendations
+        if recommendations
+        else [],
     }
-
-    return result

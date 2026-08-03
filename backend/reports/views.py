@@ -1,4 +1,15 @@
+"""
+reports/views.py
+
+API views for report management and PDF generation.
+"""
+
+import os
+
+from django.conf import settings
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404
+from django.core.files import File
 
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -9,46 +20,120 @@ from parser.models import Resume
 
 from .models import Report
 from .serializers import ReportSerializer
-from .services import build_report
-from .pdf_generator import generate_report_pdf
+from .services.report_builder import build_report
+from .services.pdf_generator import generate_pdf
 
+
+# ==================================
+# Generate Report
+# ==================================
 
 class GenerateReportView(APIView):
-    """
-    Generate AI Resume Analysis Report
-    """
 
     permission_classes = [IsAuthenticated]
 
     def post(self, request, resume_id):
 
-        resume = get_object_or_404(
-            Resume,
-            id=resume_id,
-            user=request.user,
+        try:
+            resume = Resume.objects.get(
+                id=resume_id,
+                user=request.user,
+            )
+
+        except Resume.DoesNotExist:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Resume not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        report_data = build_report(resume_id)
+
+        if not report_data:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Unable to generate report.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        ats_score = 0
+        match_score = 0
+
+        if report_data.get("ats_analysis"):
+            ats_score = report_data["ats_analysis"].get(
+                "ats_score",
+                0,
+            )
+
+        if report_data.get("job_matches"):
+
+            match_score = report_data["job_matches"][0].get(
+                "match_score",
+                0,
+            )
+
+        report = Report.objects.create(
+            resume=resume,
+            report_title=f"{resume.full_name} Resume Report",
+            ats_score=ats_score,
+            match_score=match_score,
+            parsed_data=report_data,
+            recommendations=report_data.get(
+                "recommendations",
+                [],
+            ),
+            status="Generated",
         )
 
-        # Build report
-        report = build_report(resume)
+        reports_folder = os.path.join(
+            settings.MEDIA_ROOT,
+            "reports",
+        )
 
-        # Generate PDF
-        generate_report_pdf(report)
+        os.makedirs(
+            reports_folder,
+            exist_ok=True,
+        )
 
-        # Update status
-        report.status = "Generated"
-        report.save()
+        pdf_path = os.path.join(
+            reports_folder,
+            f"report_{report.id}.pdf",
+        )
+
+        generate_pdf(
+            report_data,
+            pdf_path,
+        )
+
+        with open(pdf_path, "rb") as pdf:
+
+            report.pdf_file.save(
+                f"report_{report.id}.pdf",
+                File(pdf),
+                save=True,
+            )
 
         serializer = ReportSerializer(report)
 
         return Response(
             {
+                "success": True,
                 "message": "Report generated successfully.",
-                "report": serializer.data,
-                "pdf_url": report.pdf_file.url if report.pdf_file else None,
+                "data": serializer.data,
             },
             status=status.HTTP_201_CREATED,
         )
 
+
+# ==================================
+# Report History
+# ==================================
 
 class ReportHistoryView(APIView):
 
@@ -58,15 +143,25 @@ class ReportHistoryView(APIView):
 
         reports = Report.objects.filter(
             resume__user=request.user
-        )
+        ).order_by("-generated_at")
 
         serializer = ReportSerializer(
             reports,
             many=True,
         )
 
-        return Response(serializer.data)
+        return Response(
+            {
+                "success": True,
+                "count": reports.count(),
+                "data": serializer.data,
+            }
+        )
 
+
+# ==================================
+# Report Detail
+# ==================================
 
 class ReportDetailView(APIView):
 
@@ -82,8 +177,17 @@ class ReportDetailView(APIView):
 
         serializer = ReportSerializer(report)
 
-        return Response(serializer.data)
+        return Response(
+            {
+                "success": True,
+                "data": serializer.data,
+            }
+        )
 
+
+# ==================================
+# Delete Report
+# ==================================
 
 class DeleteReportView(APIView):
 
@@ -97,15 +201,24 @@ class DeleteReportView(APIView):
             resume__user=request.user,
         )
 
+        if report.pdf_file:
+
+            if os.path.exists(report.pdf_file.path):
+                os.remove(report.pdf_file.path)
+
         report.delete()
 
         return Response(
             {
-                "message": "Report deleted successfully."
-            },
-            status=status.HTTP_204_NO_CONTENT,
+                "success": True,
+                "message": "Report deleted successfully.",
+            }
         )
 
+
+# ==================================
+# Download Saved Report
+# ==================================
 
 class DownloadReportView(APIView):
 
@@ -123,17 +236,66 @@ class DownloadReportView(APIView):
 
             return Response(
                 {
-                    "error": "PDF not generated yet."
+                    "success": False,
+                    "message": "PDF not found.",
                 },
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        report.status = "Downloaded"
-        report.save()
-
-        return Response(
-            {
-                "message": "PDF ready.",
-                "pdf_url": report.pdf_file.url,
-            }
+        return FileResponse(
+            report.pdf_file.open("rb"),
+            as_attachment=True,
+            filename=os.path.basename(
+                report.pdf_file.name
+            ),
         )
+
+
+# ==================================
+# Generate PDF Report Directly
+# ==================================
+
+class ResumeReportPDFView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, resume_id):
+
+        try:
+
+            report = build_report(resume_id)
+
+            if not report:
+
+                return Response(
+                    {
+                        "error": "Resume not found"
+                    },
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            pdf_path = os.path.join(
+                settings.BASE_DIR,
+                "resume_analysis_report.pdf",
+            )
+
+            generate_pdf(
+                report,
+                pdf_path,
+            )
+
+            return FileResponse(
+                open(pdf_path, "rb"),
+                as_attachment=True,
+                filename="AI_Resume_Analysis_Report.pdf",
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "error": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )

@@ -1,0 +1,103 @@
+/* ==========================================
+   Profile Card
+========================================== */
+
+.profile-card{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+.profile-avatar{
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+.profile-name{
+
+    margin:10px 0;
+
+    color:#1f2937;
+
+}
+
+.profile-role{
+
+    color:#6b7280;
+
+    margin-bottom:20px;
+
+}
+
+.profile-card hr{
+
+    margin:25px 0;
+
+    border:none;
+
+    border-top:1px solid #e5e7eb;
+
+}
+
+.profile-details{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.profile-item{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+    text-align:left;
+
+}
+
+.profile-icon{
+
+    color:#2563eb;
+
+    font-size:20px;
+
+    margin-top:4px;
+
+}
+
+.profile-label{
+
+    font-size:13px;
+
+    color:#6b7280;
+
+    display:block;
+
+}
+
+.profile-item p{
+
+    margin-top:4px;
+
+    font-weight:600;
+
+    color:#111827;
+
+}

@@ -1,0 +1,220 @@
+/* ==========================================
+   Reports Page
+========================================== */
+
+.reports-page {
+  padding: 30px;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.reports-header h1 {
+  font-size: 30px;
+  color: #1f2937;
+  margin: 0;
+}
+
+.generate-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.generate-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ==========================================
+   History
+========================================== */
+
+.report-history {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.08);
+}
+
+.report-history h2 {
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* ==========================================
+   Table
+========================================== */
+
+.report-table-container {
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th {
+  background: #2563eb;
+  color: white;
+  padding: 14px;
+  text-align: center;
+}
+
+.report-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.report-table tr:hover {
+  background: #f3f4f6;
+}
+
+/* ==========================================
+   Status Badge
+========================================== */
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status.generated {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status.downloaded {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status.failed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ==========================================
+   Buttons
+========================================== */
+
+.report-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.report-actions button {
+  border: none;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.view-btn {
+  background: #2563eb;
+}
+
+.view-btn:hover {
+  background: #1d4ed8;
+}
+
+.download-btn {
+  background: #16a34a;
+}
+
+.download-btn:hover {
+  background: #15803d;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+/* ==========================================
+   Loading
+========================================== */
+
+.report-loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 20px;
+  color: #6b7280;
+}
+
+/* ==========================================
+   Empty State
+========================================== */
+
+.report-empty {
+  text-align: center;
+  padding: 60px;
+}
+
+.report-empty h3 {
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+.report-empty p {
+  color: #6b7280;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+
+  .reports-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .report-actions {
+    flex-direction: column;
+  }
+
+  .report-actions button {
+    width: 100%;
+  }
+
+  .report-table th,
+  .report-table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+}
