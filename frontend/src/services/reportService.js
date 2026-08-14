@@ -1,9 +1,14 @@
+/* ============================================================
+   Reports Service
+   ============================================================ */
+
 import api from "./api";
 
-// ===========================================
+
+// ============================================================
 // Generate Report
 // POST /api/reports/generate/:resumeId/
-// ===========================================
+// ============================================================
 
 export const generateReport = async (resumeId) => {
   const response = await api.post(
@@ -13,10 +18,11 @@ export const generateReport = async (resumeId) => {
   return response.data;
 };
 
-// ===========================================
-// Get Report History
+
+// ============================================================
+// Get All Reports
 // GET /api/reports/
-// ===========================================
+// ============================================================
 
 export const getReports = async () => {
   const response = await api.get("/reports/");
@@ -24,10 +30,11 @@ export const getReports = async () => {
   return response.data;
 };
 
-// ===========================================
+
+// ============================================================
 // Get Report Detail
 // GET /api/reports/:reportId/
-// ===========================================
+// ============================================================
 
 export const getReportDetail = async (reportId) => {
   const response = await api.get(
@@ -37,14 +44,15 @@ export const getReportDetail = async (reportId) => {
   return response.data;
 };
 
-// ===========================================
-// Download Report PDF
-// GET /api/reports/:reportId/download/
-// ===========================================
 
-export const downloadReport = async (reportId) => {
+// ============================================================
+// Download PDF
+// GET /api/reports/:resumeId/pdf/
+// ============================================================
+
+export const downloadReport = async (resumeId) => {
   const response = await api.get(
-    `/reports/${reportId}/download/`,
+    `/reports/${resumeId}/pdf/`,
     {
       responseType: "blob",
     }
@@ -53,10 +61,11 @@ export const downloadReport = async (reportId) => {
   return response;
 };
 
-// ===========================================
+
+// ============================================================
 // Delete Report
 // DELETE /api/reports/:reportId/delete/
-// ===========================================
+// ============================================================
 
 export const deleteReport = async (reportId) => {
   const response = await api.delete(

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  FaUpload,
-  FaFileAlt,
-} from "react-icons/fa";
+import { FaUpload, FaFileAlt } from "react-icons/fa";
 
 import DashboardCard from "../components/dashboard/DashboardCard";
 import ATSCard from "../components/dashboard/ATSCard";
@@ -20,79 +17,48 @@ import { downloadReport } from "../services/reportService";
 import "../assets/styles/Dashboard.css";
 
 function Dashboard() {
-
   const [dashboard, setDashboard] = useState(null);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const loadDashboard = async () => {
-
       try {
+        const data = await getDashboard();
 
-        const response = await getDashboard();
+        console.log("Dashboard Data:", data);
 
-        setDashboard(response.data);
-
+        setDashboard(data);
       } catch (error) {
-
-        console.error(
-          "Failed to load dashboard:",
-          error
-        );
-
+        console.error("Dashboard Error:", error);
       } finally {
-
         setLoading(false);
-
       }
-
     };
 
     loadDashboard();
-
   }, []);
 
-  const resumeId =
-    dashboard?.latest_resume_id;
-
-
-  /**
-   * Download Resume PDF
-   */
   const handleDownload = async () => {
-
-    if (!resumeId) {
-
-      alert("No resume available.");
-
+    if (!dashboard?.latest_resume_id) {
+      alert("No report available.");
       return;
-
     }
 
     try {
-
-      const response =
-        await downloadReport(resumeId);
-
-      const pdfBlob = new Blob(
-        [response.data],
-        {
-          type: "application/pdf",
-        }
+      const response = await downloadReport(
+        dashboard.latest_resume_id
       );
 
-      const downloadUrl =
-        window.URL.createObjectURL(pdfBlob);
+      const blob = new Blob([response.data], {
+        type: "application/pdf",
+      });
 
-      const link =
-        document.createElement("a");
+      const url = window.URL.createObjectURL(blob);
 
-      link.href = downloadUrl;
+      const link = document.createElement("a");
 
-      link.download =
-        "AI_Resume_Analysis_Report.pdf";
+      link.href = url;
+      link.download = "AI_Resume_Report.pdf";
 
       document.body.appendChild(link);
 
@@ -100,147 +66,96 @@ function Dashboard() {
 
       document.body.removeChild(link);
 
-      window.URL.revokeObjectURL(
-        downloadUrl
-      );
-
+      window.URL.revokeObjectURL(url);
     } catch (error) {
-
-      console.error(
-        "Download Failed:",
-        error
-      );
-
-      alert(
-        "Unable to download report."
-      );
-
+      console.error(error);
+      alert("Download failed.");
     }
-
   };
 
-
   if (loading) {
-
     return (
-
       <div className="dashboard-page">
-
         <h2>Loading Dashboard...</h2>
-
       </div>
-
     );
-
   }
 
+  if (!dashboard) {
+    return (
+      <div className="dashboard-page">
+        <h2>Dashboard data unavailable.</h2>
+      </div>
+    );
+  }
 
   return (
-
     <div className="dashboard-page">
 
-      {/* ========================= */}
       {/* Header */}
-      {/* ========================= */}
 
       <div className="dashboard-header">
-
-        <h1 className="welcome-text">
-
-          Welcome,
-          {" "}
-          {dashboard?.user?.full_name || "User"} 👋
-
+        <h1>
+          Welcome, {dashboard.user?.full_name} 👋
         </h1>
 
-        <p className="dashboard-subtitle">
-
+        <p>
           AI Powered Resume Analyzer Dashboard
-
         </p>
-
       </div>
 
-
-      {/* ========================= */}
       {/* Statistics */}
-      {/* ========================= */}
 
       <div className="cards-container">
 
         <DashboardCard
           title="Uploaded Resumes"
-          value={
-            dashboard?.statistics?.total_resumes ?? 0
-          }
+          value={dashboard.statistics.total_resumes}
           icon={<FaUpload />}
           color="#7C3AED"
         />
 
-        <ATSCard
-          ats={dashboard?.ats}
-        />
+        <ATSCard ats={dashboard.ats} />
 
         <ScoreCard
-          statistics={
-            dashboard?.statistics
-          }
+          statistics={dashboard.statistics}
         />
 
-        <SkillCard
-          ats={dashboard?.ats}
-        />
+        <SkillCard ats={dashboard.ats} />
 
         <JobMatchCard
-          jobMatches={
-            dashboard?.job_matches
-          }
+          jobMatches={dashboard.job_matches}
         />
 
         <DashboardCard
           title="Recommendations"
-          value={
-            dashboard?.statistics
-              ?.total_recommendations ?? 0
-          }
+          value={dashboard.statistics.total_recommendations}
           icon={<FaFileAlt />}
           color="#F59E0B"
         />
 
       </div>
 
-
-      {/* ========================= */}
       {/* Charts */}
-      {/* ========================= */}
 
       <div className="dashboard-grid">
 
         <ATSChart
-          chartData={
-            dashboard?.charts?.ats_chart
-          }
+          chartData={dashboard.charts.ats_chart}
         />
 
         <JobMatchPreview
-          jobs={
-            dashboard?.job_matches
-          }
+          jobs={dashboard.job_matches}
         />
 
       </div>
 
-
-      {/* ========================= */}
       {/* Bottom */}
-      {/* ========================= */}
 
       <div className="bottom-grid">
 
         <RecentActivity
-          activities={
-            dashboard?.recent_activity
-          }
+          activities={dashboard.recent_activity}
         />
 
         <QuickActions
@@ -250,9 +165,7 @@ function Dashboard() {
       </div>
 
     </div>
-
   );
-
 }
 
 export default Dashboard;

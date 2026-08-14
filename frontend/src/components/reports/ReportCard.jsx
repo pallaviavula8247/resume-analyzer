@@ -7,33 +7,67 @@ function ReportCard({
 
   const formatDate = (date) => {
 
-    if (!date) return "-";
+    if (!date) {
+      return "-";
+    }
 
     return new Date(date).toLocaleString();
-
   };
 
-  return (
 
+  const atsScore =
+    report.ats_score ?? 0;
+
+  const matchScore =
+    report.match_score ?? 0;
+
+  const status =
+    report.status || "Unknown";
+
+
+  return (
     <tr>
 
-      <td>{report.id}</td>
+      <td>
+        {report.id}
+      </td>
 
-      <td>{report.report_title}</td>
 
-      <td>{report.ats_score}</td>
+      <td>
+        {report.report_title ||
+          "AI Resume Analyzer Report"}
+      </td>
 
-      <td>{report.match_score}</td>
+
+      <td>
+        <strong>
+          {atsScore}%
+        </strong>
+      </td>
+
+
+      <td>
+        {matchScore}%
+      </td>
+
 
       <td>
 
-        <span className={`status ${report.status.toLowerCase()}`}>
-          {report.status}
+        <span
+          className={`status ${status.toLowerCase()}`}
+        >
+          {status}
         </span>
 
       </td>
 
-      <td>{formatDate(report.generated_at)}</td>
+
+      <td>
+        {formatDate(
+          report.generated_at
+        )}
+      </td>
+
 
       <td>
 
@@ -45,9 +79,7 @@ function ReportCard({
       </td>
 
     </tr>
-
   );
-
 }
 
 export default ReportCard;

@@ -30,10 +30,6 @@ class AnalyzeResumeView(APIView):
                 user=request.user,
             )
 
-            analysis = ATSAnalysis.objects.get(
-                resume=resume,
-            )
-
         except Resume.DoesNotExist:
             return Response(
                 {
@@ -41,6 +37,11 @@ class AnalyzeResumeView(APIView):
                     "message": "Resume not found.",
                 },
                 status=status.HTTP_404_NOT_FOUND,
+            )
+
+        try:
+            analysis = ATSAnalysis.objects.get(
+                resume=resume,
             )
 
         except ATSAnalysis.DoesNotExist:
@@ -79,29 +80,44 @@ class AnalyzeResumeView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        result = analyze_resume(resume)
+        try:
 
-        analysis, created = ATSAnalysis.objects.update_or_create(
-            resume=resume,
-            defaults=result,
-        )
+            result = analyze_resume(resume)
 
-        serializer = ATSAnalysisSerializer(analysis)
+            analysis, created = ATSAnalysis.objects.update_or_create(
+                resume=resume,
+                defaults=result,
+            )
 
-        return Response(
-            {
-                "success": True,
-                "message": "ATS analysis completed successfully.",
-                "data": serializer.data,
-            },
-            status=status.HTTP_200_OK,
-        )
+            serializer = ATSAnalysisSerializer(
+                analysis
+            )
+
+            return Response(
+                {
+                    "success": True,
+                    "message": "ATS analysis completed successfully.",
+                    "data": serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "ATS analysis failed.",
+                    "error": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class JobMatchView(APIView):
     """
     POST -> Generate Job Match
-    GET  -> Retrieve All Job Matches
+    GET  -> Retrieve Job Matches
     """
 
     permission_classes = [IsAuthenticated]
@@ -126,9 +142,9 @@ class JobMatchView(APIView):
             )
 
         matches = (
-            JobMatch.objects
-            .filter(resume=resume)
-            .order_by("-created_at")
+            JobMatch.objects.filter(
+                resume=resume
+            ).order_by("-created_at")
         )
 
         serializer = JobMatchSerializer(
@@ -154,7 +170,10 @@ class JobMatchView(APIView):
         if not serializer.is_valid():
 
             return Response(
-                serializer.errors,
+                {
+                    "success": False,
+                    "errors": serializer.errors,
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -175,37 +194,64 @@ class JobMatchView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        resume_data = {
-            "skills": resume.skills,
-        }
+        try:
 
-        result = match_resume(
-            resume_data,
-            serializer.validated_data["job_description"],
-        )
+            result = match_resume(
+                {
+                    "skills": resume.skills,
+                },
+                serializer.validated_data[
+                    "job_description"
+                ],
+            )
 
-        job_match = JobMatch.objects.create(
-            resume=resume,
-            job_title=serializer.validated_data.get(
-                "job_title",
-                "",
-            ),
-            job_description=serializer.validated_data[
-                "job_description"
-            ],
-            match_score=int(result["match_score"]),
-            match_level=result["match_level"],
-            matched_skills=result["matched_skills"],
-            missing_skills=result["missing_skills"],
-            extra_skills=result["extra_skills"],
-            recommendations=result["recommendations"],
-        )
+            job_match = JobMatch.objects.create(
+                resume=resume,
+                job_title=serializer.validated_data.get(
+                    "job_title",
+                    "",
+                ),
+                job_description=serializer.validated_data[
+                    "job_description"
+                ],
+                match_score=int(
+                    result["match_score"]
+                ),
+                match_level=result[
+                    "match_level"
+                ],
+                matched_skills=result[
+                    "matched_skills"
+                ],
+                missing_skills=result[
+                    "missing_skills"
+                ],
+                extra_skills=result[
+                    "extra_skills"
+                ],
+                recommendations=result[
+                    "recommendations"
+                ],
+            )
 
-        return Response(
-            {
-                "success": True,
-                "message": "Job matching completed successfully.",
-                "data": JobMatchSerializer(job_match).data,
-            },
-            status=status.HTTP_201_CREATED,
-        )
+            return Response(
+                {
+                    "success": True,
+                    "message": "Job matching completed successfully.",
+                    "data": JobMatchSerializer(
+                        job_match
+                    ).data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        except Exception as e:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Job matching failed.",
+                    "error": str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )

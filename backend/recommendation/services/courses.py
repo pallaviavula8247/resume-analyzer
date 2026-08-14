@@ -1,181 +1,271 @@
 """
-courses.py
+recommendation/services/courses.py
 
-AI Course Recommendation Service
+Course recommendation service.
 
-This module recommends courses based on
-the candidate's missing skills.
+Provides course recommendations based on
+recommended career roles.
 """
 
 
-# ----------------------------------------
+# ============================================================
 # Course Database
-# ----------------------------------------
+# ============================================================
 
 COURSE_DATABASE = {
 
-    "Python": {
-        "title": "Python for Everybody",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
+    "Backend Developer": [
+        {
+            "title": "Python Backend Development",
+            "platform": "Coursera",
+            "level": "Beginner",
+            "skills": ["Python", "Backend Development"],
+        },
+        {
+            "title": "Django Web Framework",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Django", "Python"],
+        },
+        {
+            "title": "Django REST Framework",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Django", "REST API"],
+        },
+        {
+            "title": "Docker for Developers",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["Docker", "DevOps"],
+        },
+    ],
 
-    "Django": {
-        "title": "Django REST Framework Masterclass",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
+    "Full Stack Developer": [
+        {
+            "title": "Full Stack Web Development",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["HTML", "CSS", "JavaScript", "React"],
+        },
+        {
+            "title": "React.js Complete Guide",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["React", "JavaScript"],
+        },
+        {
+            "title": "Django REST API Development",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Django", "REST API"],
+        },
+        {
+            "title": "Full Stack Development with React and Django",
+            "platform": "YouTube",
+            "level": "Advanced",
+            "skills": ["React", "Django", "REST API"],
+        },
+    ],
 
-    "Flask": {
-        "title": "Flask Web Development",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
+    "Python Developer": [
+        {
+            "title": "Python Programming",
+            "platform": "Coursera",
+            "level": "Beginner",
+            "skills": ["Python"],
+        },
+        {
+            "title": "Object Oriented Programming with Python",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Python", "OOP"],
+        },
+        {
+            "title": "Python Data Structures and Algorithms",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["Python", "DSA"],
+        },
+        {
+            "title": "Python Projects for Beginners",
+            "platform": "YouTube",
+            "level": "Beginner",
+            "skills": ["Python"],
+        },
+    ],
 
-    "SQL": {
-        "title": "SQL for Data Science",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
+    "Software Engineer": [
+        {
+            "title": "Data Structures and Algorithms",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["DSA", "Algorithms"],
+        },
+        {
+            "title": "Software Engineering Principles",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["Software Engineering"],
+        },
+        {
+            "title": "Git and GitHub",
+            "platform": "Udemy",
+            "level": "Beginner",
+            "skills": ["Git", "GitHub"],
+        },
+        {
+            "title": "Docker and DevOps Fundamentals",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["Docker", "DevOps"],
+        },
+    ],
 
-    "MySQL": {
-        "title": "MySQL Bootcamp",
-        "platform": "Udemy",
-        "level": "Beginner",
-    },
+    "Frontend Developer": [
+        {
+            "title": "HTML and CSS Fundamentals",
+            "platform": "Coursera",
+            "level": "Beginner",
+            "skills": ["HTML", "CSS"],
+        },
+        {
+            "title": "JavaScript Complete Course",
+            "platform": "Udemy",
+            "level": "Beginner",
+            "skills": ["JavaScript"],
+        },
+        {
+            "title": "React.js Development",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["React", "JavaScript"],
+        },
+        {
+            "title": "Modern Frontend Development",
+            "platform": "YouTube",
+            "level": "Intermediate",
+            "skills": ["React", "JavaScript", "CSS"],
+        },
+    ],
 
-    "MongoDB": {
-        "title": "MongoDB Complete Developer Guide",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
+    "Python Django Developer": [
+        {
+            "title": "Python Django Development",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Python", "Django"],
+        },
+        {
+            "title": "Django REST Framework",
+            "platform": "Udemy",
+            "level": "Intermediate",
+            "skills": ["Django", "REST API"],
+        },
+        {
+            "title": "Building APIs with Django",
+            "platform": "Coursera",
+            "level": "Intermediate",
+            "skills": ["Django", "REST API"],
+        },
+        {
+            "title": "Django Deployment with Docker",
+            "platform": "YouTube",
+            "level": "Advanced",
+            "skills": ["Django", "Docker"],
+        },
+    ],
 
-    "React": {
-        "title": "React Complete Guide",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
-
-    "Angular": {
-        "title": "Angular Crash Course",
-        "platform": "Coursera",
-        "level": "Intermediate",
-    },
-
-    "Docker": {
-        "title": "Docker Essentials",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
-
-    "Kubernetes": {
-        "title": "Kubernetes for Beginners",
-        "platform": "Udemy",
-        "level": "Advanced",
-    },
-
-    "AWS": {
-        "title": "AWS Cloud Practitioner",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
-
-    "Git": {
-        "title": "Git & GitHub Complete Guide",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
-
-    "GitHub": {
-        "title": "GitHub Essentials",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
-
-    "REST API": {
-        "title": "REST API Development with Django",
-        "platform": "Udemy",
-        "level": "Intermediate",
-    },
-
-    "Machine Learning": {
-        "title": "Machine Learning Specialization",
-        "platform": "Coursera",
-        "level": "Intermediate",
-    },
-
-    "Deep Learning": {
-        "title": "Deep Learning Specialization",
-        "platform": "Coursera",
-        "level": "Advanced",
-    },
-
-    "TensorFlow": {
-        "title": "TensorFlow Developer Certificate",
-        "platform": "Coursera",
-        "level": "Advanced",
-    },
-
-    "PyTorch": {
-        "title": "PyTorch for Deep Learning",
-        "platform": "Udemy",
-        "level": "Advanced",
-    },
-
-    "NumPy": {
-        "title": "NumPy for Data Science",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
-
-    "Pandas": {
-        "title": "Data Analysis with Pandas",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
-
-    "Matplotlib": {
-        "title": "Python Data Visualization",
-        "platform": "Coursera",
-        "level": "Beginner",
-    },
 }
 
 
-# ----------------------------------------
-# Recommendation Function
-# ----------------------------------------
+# ============================================================
+# Normalize Career Input
+# ============================================================
 
-def recommend_courses(missing_skills):
+def _normalize_careers(careers):
     """
-    Recommend courses based on missing skills.
+    Convert career input into a clean list.
     """
+
+    if not careers:
+        return []
+
+    if isinstance(careers, str):
+        return [careers.strip()] if careers.strip() else []
+
+    if isinstance(careers, (list, tuple, set)):
+        return [
+            str(career).strip()
+            for career in careers
+            if str(career).strip()
+        ]
+
+    return []
+
+
+# ============================================================
+# Recommend Courses
+# ============================================================
+
+def recommend_courses(careers):
+    """
+    Recommend courses based on career roles.
+
+    Parameters
+    ----------
+    careers : list
+        Recommended career roles.
+
+    Returns
+    -------
+    list
+        Recommended course dictionaries.
+    """
+
+    careers = _normalize_careers(careers)
 
     recommendations = []
 
-    for skill in missing_skills:
+    seen_courses = set()
 
-        if skill in COURSE_DATABASE:
+    for career in careers:
 
-            course = COURSE_DATABASE[skill].copy()
-            course["skill"] = skill
+        courses = COURSE_DATABASE.get(
+            career,
+            []
+        )
 
-            recommendations.append(course)
+        for course in courses:
+
+            title = course.get("title", "")
+
+            if not title:
+                continue
+
+            # Avoid duplicate courses
+            if title in seen_courses:
+                continue
+
+            seen_courses.add(title)
+
+            recommendations.append(
+                {
+                    "title": title,
+                    "platform": course.get(
+                        "platform",
+                        "Online"
+                    ),
+                    "level": course.get(
+                        "level",
+                        "Beginner"
+                    ),
+                    "skills": course.get(
+                        "skills",
+                        []
+                    ),
+                    "career": career,
+                }
+            )
 
     return recommendations
-
-
-# ----------------------------------------
-# Testing
-# ----------------------------------------
-
-if __name__ == "__main__":
-
-    skills = [
-        "SQL",
-        "Docker",
-        "Git",
-        "REST API",
-    ]
-
-    print(recommend_courses(skills))

@@ -9,27 +9,40 @@ function ReportHistory({
   if (loading) {
     return (
       <div className="report-loading">
-        <h3>Loading reports...</h3>
+        <h3>
+          Loading reports...
+        </h3>
       </div>
     );
   }
 
-  if (!reports || reports.length === 0) {
+
+  if (
+    !reports ||
+    reports.length === 0
+  ) {
     return (
       <div className="report-empty">
-        <h3>No reports available.</h3>
+
+        <h3>
+          No reports available.
+        </h3>
+
         <p>
           Generate your first AI Resume Report.
         </p>
+
       </div>
     );
   }
 
-  return (
 
+  return (
     <div className="report-history">
 
-      <h2>Report History</h2>
+      <h2>
+        Report History
+      </h2>
 
       <ReportTable
         reports={reports}
@@ -37,9 +50,7 @@ function ReportHistory({
       />
 
     </div>
-
   );
-
 }
 
 export default ReportHistory;

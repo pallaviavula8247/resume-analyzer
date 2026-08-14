@@ -1,47 +1,84 @@
 import { useNavigate } from "react-router-dom";
+import {
+  FaUpload,
+  FaChartBar,
+  FaFilePdf,
+  FaHistory
+} from "react-icons/fa";
 
-function QuickActions({ onDownload }) {
+import "../../assets/styles/QuickActions.css";
+
+
+const QuickActions = () => {
 
   const navigate = useNavigate();
 
+
+  const actions = [
+    {
+      title: "Upload Resume",
+      icon: <FaUpload />,
+      path: "/upload-resume",
+      className: ""
+    },
+    {
+      title: "Resume Analysis",
+      icon: <FaChartBar />,
+      path: "/analysis",
+      className: ""
+    },
+    {
+      title: "Reports",
+      icon: <FaHistory />,
+      path: "/reports",
+      className: ""
+    },
+    {
+      title: "Download PDF",
+      icon: <FaFilePdf />,
+      path: "/reports",
+      className: "primary"
+    }
+  ];
+
+
   return (
+    <div className="quick-actions-container">
 
-    <div className="dashboard-card">
+      <h2 className="quick-actions-title">
+        Quick Actions
+      </h2>
 
-      <h2>Quick Actions</h2>
 
-      <div className="quick-actions-container">
+      <div className="quick-actions-grid">
 
-        <button
-          onClick={() => navigate("/upload")}
-        >
-          📤 Upload Resume
-        </button>
+        {actions.map((action, index) => (
 
-        <button
-          onClick={() => navigate("/analysis")}
-        >
-          🤖 Analyze Resume
-        </button>
+          <div
+            key={index}
+            className={`quick-action-card ${action.className}`}
+            onClick={() => navigate(action.path)}
+          >
 
-        <button
-          onClick={() => navigate("/reports")}
-        >
-          📋 View Reports
-        </button>
+            <div className="quick-action-icon">
+              {action.icon}
+            </div>
 
-        <button
-          onClick={onDownload}
-        >
-          📄 Download PDF Report
-        </button>
+
+            <h3>
+              {action.title}
+            </h3>
+
+
+          </div>
+
+        ))}
 
       </div>
 
     </div>
-
   );
+};
 
-}
 
 export default QuickActions;

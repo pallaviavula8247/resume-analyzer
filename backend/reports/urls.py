@@ -1,62 +1,55 @@
 from django.urls import path
 
 from .views import (
-    GenerateReportView,
+    ReportGenerateView,
+    ReportListView,
     ReportHistoryView,
     ReportDetailView,
-    DeleteReportView,
-    DownloadReportView,
-    ResumeReportPDFView,
+    ReportPDFView,
+    ReportDeleteView,
 )
-
 
 urlpatterns = [
 
-    # Generate report
+    # Generate report data
     path(
         "generate/<int:resume_id>/",
-        GenerateReportView.as_view(),
-        name="generate-report",
+        ReportGenerateView.as_view(),
+        name="report-generate"
     ),
 
+    # Report list
+    path(
+        "",
+        ReportListView.as_view(),
+        name="report-list"
+    ),
 
     # Report history
     path(
-        "",
+        "history/",
         ReportHistoryView.as_view(),
-        name="report-history",
+        name="report-history"
     ),
-
 
     # Report detail
     path(
         "<int:report_id>/",
         ReportDetailView.as_view(),
-        name="report-detail",
+        name="report-detail"
     ),
-
 
     # Delete report
     path(
         "<int:report_id>/delete/",
-        DeleteReportView.as_view(),
-        name="delete-report",
+        ReportDeleteView.as_view(),
+        name="report-delete"
     ),
 
-
-    # Download saved report
-    path(
-        "<int:report_id>/download/",
-        DownloadReportView.as_view(),
-        name="download-report",
-    ),
-
-
-    # Generate AI Resume Analyzer PDF directly
+    # PDF
     path(
         "<int:resume_id>/pdf/",
-        ResumeReportPDFView.as_view(),
-        name="resume-report-pdf",
+        ReportPDFView.as_view(),
+        name="report-pdf"
     ),
-
 ]

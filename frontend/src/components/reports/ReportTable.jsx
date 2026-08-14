@@ -6,7 +6,6 @@ function ReportTable({
 }) {
 
   return (
-
     <div className="report-table-container">
 
       <table className="report-table">
@@ -14,35 +13,26 @@ function ReportTable({
         <thead>
 
           <tr>
-
             <th>ID</th>
-
             <th>Title</th>
-
             <th>ATS Score</th>
-
             <th>Match Score</th>
-
             <th>Status</th>
-
             <th>Generated</th>
-
             <th>Actions</th>
-
           </tr>
 
         </thead>
 
+
         <tbody>
 
           {reports.map((report) => (
-
             <ReportCard
               key={report.id}
               report={report}
               refreshReports={refreshReports}
             />
-
           ))}
 
         </tbody>
@@ -50,9 +40,7 @@ function ReportTable({
       </table>
 
     </div>
-
   );
-
 }
 
 export default ReportTable;

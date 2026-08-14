@@ -1,159 +1,87 @@
 function ATSCard({ ats }) {
 
   if (!ats) {
-
     return (
-
       <div className="dashboard-card">
 
-        <h2>ATS Score</h2>
+        <h2>ATS Analysis</h2>
 
-        <div
-          style={{
-            textAlign: "center",
-            padding: "20px",
-            color: "#666",
-          }}
-        >
-          No ATS analysis available.
-        </div>
+        <p>No ATS analysis available.</p>
 
       </div>
-
     );
-
   }
 
+  let color = "#ef4444";
   let status = "Needs Improvement";
 
   if (ats.ats_score >= 80) {
-
+    color = "#22c55e";
     status = "Excellent";
-
   } else if (ats.ats_score >= 60) {
-
+    color = "#f59e0b";
     status = "Good";
-
   }
 
   return (
-
     <div className="dashboard-card">
 
-      <h2>ATS Score</h2>
+      <h2>ATS Analysis</h2>
 
       <div
         style={{
           textAlign: "center",
-          marginBottom: "20px",
+          marginTop: "15px",
         }}
       >
-
         <h1
           style={{
-            fontSize: "48px",
-            color: "#7C3AED",
-            margin: 0,
+            color,
+            fontSize: "60px",
+            marginBottom: "10px",
           }}
         >
           {ats.ats_score}%
         </h1>
 
-        <p
-          style={{
-            fontWeight: "bold",
-            color: "#555",
-          }}
-        >
-          {status}
-        </p>
-
+        <h3>{status}</h3>
       </div>
+
+      <hr />
 
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
           gap: "12px",
+          marginTop: "20px",
         }}
       >
+        <p>Keyword</p>
+        <strong>{ats.keyword_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Keyword Score</span>
-          <strong>{ats.keyword_score}%</strong>
-        </div>
+        <p>Skills</p>
+        <strong>{ats.skill_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Skill Score</span>
-          <strong>{ats.skill_score}%</strong>
-        </div>
+        <p>Education</p>
+        <strong>{ats.education_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Education</span>
-          <strong>{ats.education_score}%</strong>
-        </div>
+        <p>Experience</p>
+        <strong>{ats.experience_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Experience</span>
-          <strong>{ats.experience_score}%</strong>
-        </div>
+        <p>Projects</p>
+        <strong>{ats.project_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Projects</span>
-          <strong>{ats.project_score}%</strong>
-        </div>
+        <p>Certification</p>
+        <strong>{ats.certification_score}%</strong>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Certifications</span>
-          <strong>{ats.certification_score}%</strong>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <span>Format</span>
-          <strong>{ats.format_score}%</strong>
-        </div>
+        <p>Format</p>
+        <strong>{ats.format_score}%</strong>
 
       </div>
 
     </div>
-
   );
-
 }
 
 export default ATSCard;
