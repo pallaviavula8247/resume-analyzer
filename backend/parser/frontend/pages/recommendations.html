@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Recommendations | ResumeAI</title>
+
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <!-- Recommendation CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/recommendation.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-layout">
+
+
+    <!-- ==================================================
+         SIDEBAR
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <!-- BRAND -->
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+
+            <a
+                href="recommendations.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendations
+            </a>
+
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+
+        </nav>
+
+
+        <!-- LOGOUT -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+                type="button"
+            >
+
+                <span>↪</span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+         ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==================================================
+             TOPBAR
+             ================================================== -->
+
+        <header class="topbar">
+
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <h2>
+                    AI Recommendations
+                </h2>
+
+                <p>
+                    Personalized suggestions for your career growth
+                </p>
+
+            </div>
+
+
+            <!-- USER -->
+
+            <div class="topbar-user">
+
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ==================================================
+             RECOMMENDATION PAGE
+             ================================================== -->
+
+        <section class="recommendation-page">
+
+
+            <!-- ==================================================
+                 PAGE HEADER
+                 ================================================== -->
+
+            <div class="page-header">
+
+
+                <span class="page-eyebrow">
+                    AI CAREER GUIDANCE
+                </span>
+
+
+                <h1>
+                    Improve your resume
+                </h1>
+
+
+                <p>
+                    Get personalized AI-powered recommendations
+                    based on your resume analysis, skills,
+                    experience and career profile.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 SUMMARY
+                 ================================================== -->
+
+            <div
+                id="recommendationSummary"
+                class="recommendation-summary"
+            >
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Resume Score
+                    </span>
+
+                    <span
+                        id="resumeScore"
+                        class="summary-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Recommendations
+                    </span>
+
+                    <span
+                        id="recommendationCount"
+                        class="summary-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Resume ID
+                    </span>
+
+                    <span
+                        id="resumeIdDisplay"
+                        class="summary-value"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 MESSAGE
+                 ================================================== -->
+
+            <div
+                id="recommendationMessage"
+                class="recommendation-message"
+                style="display: none;"
+            >
+            </div>
+
+
+
+            <!-- ==================================================
+                 LOADING
+                 ================================================== -->
+
+            <div
+                id="recommendationLoading"
+                class="recommendation-loading"
+            >
+
+                Loading AI recommendations...
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 SECTION
+                 ================================================== -->
+
+            <div
+                id="recommendationSection"
+                class="recommendation-section"
+                style="display: none;"
+            >
+
+
+                <div class="recommendation-section-header">
+
+
+                    <div>
+
+                        <h2>
+                            Your recommendations
+                        </h2>
+
+                        <p>
+                            Practical improvements based on your resume.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     RECOMMENDATION GRID
+                     ================================================== -->
+
+                <div
+                    id="recommendationGrid"
+                    class="recommendation-grid"
+                >
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 EMPTY STATE
+                 ================================================== -->
+
+            <div
+                id="recommendationEmpty"
+                class="recommendation-empty"
+                style="display: none;"
+            >
+
+
+                <div class="recommendation-empty-icon">
+                    ✦
+                </div>
+
+
+                <h3>
+                    No recommendations available
+                </h3>
+
+
+                <p>
+                    Upload and analyze a resume first.
+                    Once your resume has been analyzed,
+                    AI recommendations will appear here.
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+     ================================================== -->
+
+<script src="../js/api.js"></script>
+
+<script src="../js/recommendation.js"></script>
+
+
+</body>
+
+</html>

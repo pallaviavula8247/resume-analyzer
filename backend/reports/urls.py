@@ -9,13 +9,14 @@ from .views import (
     ReportDeleteView,
 )
 
+
 urlpatterns = [
 
-    # Generate report data
+    # Generate report
     path(
         "generate/<int:resume_id>/",
         ReportGenerateView.as_view(),
-        name="report-generate"
+        name="generate-report"
     ),
 
     # Report list
@@ -39,6 +40,13 @@ urlpatterns = [
         name="report-detail"
     ),
 
+    # Download PDF
+    path(
+        "<int:resume_id>/pdf/",
+        ReportPDFView.as_view(),
+        name="report-pdf"
+    ),
+
     # Delete report
     path(
         "<int:report_id>/delete/",
@@ -46,10 +54,4 @@ urlpatterns = [
         name="report-delete"
     ),
 
-    # PDF
-    path(
-        "<int:resume_id>/pdf/",
-        ReportPDFView.as_view(),
-        name="report-pdf"
-    ),
 ]

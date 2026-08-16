@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reports | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/reports.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-layout">
+
+
+    <!-- ==================================================
+         SIDEBAR
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+
+            <a
+                href="recommendations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendations
+            </a>
+
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+
+            <a
+                href="reports.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="logout-button"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+         ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==================================================
+             TOPBAR
+             ================================================== -->
+
+        <header class="topbar">
+
+
+            <button
+                type="button"
+                id="menuButton"
+                class="menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <h2>
+                    Reports
+                </h2>
+
+                <p>
+                    View and download your resume analysis reports
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==================================================
+             PAGE CONTENT
+             ================================================== -->
+
+        <section class="reports-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        RESUME REPORTS
+                    </span>
+
+                    <h1>
+                        Your Reports
+                    </h1>
+
+                    <p>
+                        Review your previous resume analysis
+                        reports and download them whenever you need.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="generateReportButton"
+                    class="generate-report-button"
+                >
+                    + Generate New Report
+                </button>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 STATUS MESSAGE
+                 ================================================== -->
+
+            <div
+                id="reportMessage"
+                class="report-message"
+                style="display:none;"
+            ></div>
+
+
+
+            <!-- ==================================================
+                 REPORT SUMMARY
+                 ================================================== -->
+
+            <div class="report-summary-grid">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Reports
+                        </span>
+
+                        <strong id="totalReports">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Latest Report
+                        </span>
+
+                        <strong id="latestReport">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong>
+                            Ready
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 REPORT LIST
+                 ================================================== -->
+
+            <div class="reports-card">
+
+
+                <div class="reports-card-header">
+
+                    <div>
+
+                        <h2>
+                            Report History
+                        </h2>
+
+                        <p>
+                            Your generated resume reports
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="refreshReportsButton"
+                        class="refresh-button"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+
+                <!-- LOADING -->
+
+                <div
+                    id="reportsLoading"
+                    class="reports-loading"
+                >
+                    Loading reports...
+                </div>
+
+
+
+                <!-- EMPTY -->
+
+                <div
+                    id="reportsEmpty"
+                    class="reports-empty"
+                    style="display:none;"
+                >
+
+                    <div class="empty-icon">
+                        ▤
+                    </div>
+
+                    <h3>
+                        No reports yet
+                    </h3>
+
+                    <p>
+                        Upload and analyze your resume,
+                        then generate your first report.
+                    </p>
+
+                    <button
+                        type="button"
+                        id="emptyGenerateButton"
+                        class="generate-report-button"
+                    >
+                        Generate Report
+                    </button>
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div
+                    id="reportsTableContainer"
+                    class="reports-table-container"
+                    style="display:none;"
+                >
+
+                    <table class="reports-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Report
+                                </th>
+
+                                <th>
+                                    Resume ID
+                                </th>
+
+                                <th>
+                                    Created
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="reportsTableBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 SECURITY NOTE
+                 ================================================== -->
+
+            <div class="security-note">
+
+                <span>
+                    🔒
+                </span>
+
+                <div>
+
+                    <strong>
+                        Your reports are secure
+                    </strong>
+
+                    <p>
+                        Reports are available only to your
+                        authenticated account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+     ================================================== -->
+
+<script src="../js/api.js"></script>
+<script src="../js/reports.js"></script>
+
+
+</body>
+
+</html>

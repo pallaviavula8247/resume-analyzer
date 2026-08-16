@@ -1,0 +1,704 @@
+/* =========================================================
+   RESUME AI - RECOMMENDATIONS PAGE
+   Professional SaaS Dashboard
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.recommendation-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 36px 40px 60px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.recommendation-page .page-header {
+    margin-bottom: 32px;
+}
+
+.recommendation-page .page-eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: #4f46e5;
+}
+
+.recommendation-page .page-header h1 {
+    margin: 0 0 10px;
+
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.recommendation-page .page-header p {
+    max-width: 760px;
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.recommendation-loading {
+    min-height: 220px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+
+/* Loading spinner */
+
+.recommendation-loading::before {
+    content: "";
+
+    width: 18px;
+    height: 18px;
+
+    margin-right: 12px;
+
+    border: 2px solid #e5e7eb;
+    border-top-color: #4f46e5;
+
+    border-radius: 50%;
+
+    animation:
+        recommendationSpin 0.8s linear infinite;
+}
+
+
+@keyframes recommendationSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.recommendation-message {
+    margin-bottom: 24px;
+    padding: 16px 18px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Error */
+
+.recommendation-message.error {
+    border: 1px solid #fecaca;
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+/* Success */
+
+.recommendation-message.success {
+    border: 1px solid #bbf7d0;
+
+    background: #f0fdf4;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.recommendation-empty {
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    text-align: center;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+.recommendation-empty-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 16px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 26px;
+}
+
+.recommendation-empty h3 {
+    margin: 0 0 8px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.recommendation-empty p {
+    max-width: 500px;
+
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   RECOMMENDATION GRID
+   ========================================================= */
+
+.recommendation-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   RECOMMENDATION CARD
+   ========================================================= */
+
+.recommendation-card {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    min-height: 180px;
+
+    padding: 26px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #c7d2fe;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   CARD NUMBER
+   ========================================================= */
+
+.recommendation-number {
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.recommendation-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.recommendation-content h3 {
+    margin: 0 0 9px;
+
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.recommendation-content p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+.recommendation-category {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 12px;
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+
+/* =========================================================
+   PRIORITY
+   ========================================================= */
+
+.recommendation-priority {
+    display: inline-flex;
+    align-items: center;
+
+    margin-top: 16px;
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* High */
+
+.recommendation-priority.high {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
+/* Medium */
+
+.recommendation-priority.medium {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+
+/* Low */
+
+.recommendation-priority.low {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   SKILL RECOMMENDATIONS
+   ========================================================= */
+
+.recommendation-skills {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+.recommendation-skill {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 11px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #f9fafb;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION AREA
+   ========================================================= */
+
+.recommendation-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 32px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.recommendation-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recommendation-button:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 16px rgba(79, 70, 229, 0.22);
+}
+
+.recommendation-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.recommendation-button.secondary {
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    color: #374151;
+
+    box-shadow: none;
+}
+
+.recommendation-button.secondary:hover {
+    background: #f9fafb;
+
+    border-color: #9ca3af;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   SUMMARY CARD
+   ========================================================= */
+
+.recommendation-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.recommendation-summary-card {
+    padding: 22px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.recommendation-summary-label {
+    margin-bottom: 8px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #6b7280;
+}
+
+.recommendation-summary-value {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.recommendation-section {
+    margin-top: 36px;
+}
+
+.recommendation-section-title {
+    margin: 0 0 18px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.recommendation-section-description {
+    margin: -8px 0 22px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .recommendation-page {
+        padding: 30px 24px 50px;
+    }
+
+    .recommendation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendation-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    .recommendation-page {
+        padding: 24px 16px 40px;
+    }
+
+    .recommendation-page .page-header h1 {
+        font-size: 26px;
+    }
+
+    .recommendation-page .page-header p {
+        font-size: 14px;
+    }
+
+    .recommendation-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .recommendation-card {
+        flex-direction: column;
+
+        gap: 16px;
+
+        min-height: auto;
+
+        padding: 20px;
+    }
+
+    .recommendation-number {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 12px;
+    }
+
+    .recommendation-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendation-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .recommendation-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.recommendation-button:focus-visible {
+    outline: 3px solid #c7d2fe;
+    outline-offset: 2px;
+}
+
+.recommendation-card:focus-within {
+    border-color: #a5b4fc;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .recommendation-card,
+    .recommendation-button {
+        transition: none;
+    }
+
+    .recommendation-loading::before {
+        animation: none;
+    }
+
+}

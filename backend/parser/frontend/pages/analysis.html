@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Resume Analysis | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/analysis.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-layout">
+
+
+    <!-- ==================================================
+         SIDEBAR
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+
+            <a
+                href="analysis.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+
+            <a
+                href="recommendations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendations
+            </a>
+
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="logout-button"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+         ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button
+                type="button"
+                id="menuButton"
+                class="menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <h2>
+                    Resume Analysis
+                </h2>
+
+                <p>
+                    AI-powered resume performance analysis
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==================================================
+             ANALYSIS CONTENT
+             ================================================== -->
+
+        <section class="analysis-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <span class="page-eyebrow">
+                    RESUME ANALYSIS
+                </span>
+
+                <h1>
+                    Resume Performance
+                </h1>
+
+                <p>
+                    Review your resume score, skills,
+                    strengths and improvement areas.
+                </p>
+
+            </div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="analysisLoading"
+                class="analysis-loading"
+            >
+
+                <div class="loading-spinner"></div>
+
+                <h3>
+                    Analyzing your resume...
+                </h3>
+
+                <p>
+                    Please wait while ResumeAI processes
+                    your resume.
+                </p>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                id="analysisError"
+                class="analysis-message error"
+                style="display: none;"
+            >
+            </div>
+
+
+
+            <!-- ==================================================
+                 RESULTS
+                 ================================================== -->
+
+            <div
+                id="analysisResults"
+                style="display: none;"
+            >
+
+
+                <!-- SCORE SECTION -->
+
+                <div class="analysis-grid">
+
+
+                    <!-- ATS SCORE -->
+
+                    <div class="analysis-card score-card">
+
+                        <div class="card-label">
+                            ATS SCORE
+                        </div>
+
+                        <div
+                            id="atsScore"
+                            class="ats-score"
+                        >
+                            0
+                        </div>
+
+                        <div class="score-out-of">
+                            / 100
+                        </div>
+
+                        <div
+                            id="scoreStatus"
+                            class="score-status"
+                        >
+                            Analyzing
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- KEYWORD SCORE -->
+
+                    <div class="analysis-card">
+
+                        <div class="card-label">
+                            KEYWORD SCORE
+                        </div>
+
+                        <div
+                            id="keywordScore"
+                            class="metric-value"
+                        >
+                            0
+                        </div>
+
+                        <p>
+                            Resume keyword relevance
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- SKILL SCORE -->
+
+                    <div class="analysis-card">
+
+                        <div class="card-label">
+                            SKILL SCORE
+                        </div>
+
+                        <div
+                            id="skillScore"
+                            class="metric-value"
+                        >
+                            0
+                        </div>
+
+                        <p>
+                            Technical skill coverage
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- EXPERIENCE SCORE -->
+
+                    <div class="analysis-card">
+
+                        <div class="card-label">
+                            EXPERIENCE SCORE
+                        </div>
+
+                        <div
+                            id="experienceScore"
+                            class="metric-value"
+                        >
+                            0
+                        </div>
+
+                        <p>
+                            Experience relevance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     DETAILS
+                     ================================================== -->
+
+                <div class="analysis-two-column">
+
+
+                    <!-- STRENGTHS -->
+
+                    <div class="analysis-section">
+
+                        <div class="section-heading">
+
+                            <span class="section-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <h2>
+                                    Strengths
+                                </h2>
+
+                                <p>
+                                    What your resume does well
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <ul
+                            id="strengthsList"
+                            class="analysis-list"
+                        >
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- WEAKNESSES -->
+
+                    <div class="analysis-section">
+
+                        <div class="section-heading">
+
+                            <span class="section-icon">
+                                !
+                            </span>
+
+                            <div>
+
+                                <h2>
+                                    Improvement Areas
+                                </h2>
+
+                                <p>
+                                    Areas that need attention
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <ul
+                            id="weaknessesList"
+                            class="analysis-list"
+                        >
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     MISSING SKILLS
+                     ================================================== -->
+
+                <div class="analysis-section">
+
+                    <div class="section-heading">
+
+                        <span class="section-icon">
+                            +
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                Missing Skills
+                            </h2>
+
+                            <p>
+                                Skills you may need to improve
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="missingSkills"
+                        class="skills-container"
+                    >
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     RECOMMENDATIONS
+                     ================================================== -->
+
+                <div class="analysis-section">
+
+                    <div class="section-heading">
+
+                        <span class="section-icon">
+                            ✦
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                AI Recommendations
+                            </h2>
+
+                            <p>
+                                Suggestions to strengthen your resume
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="recommendationsList"
+                        class="recommendations-list"
+                    >
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     ACTIONS
+                     ================================================== -->
+
+                <div class="analysis-actions">
+
+                    <a
+                        href="upload-resume.html"
+                        class="btn btn-secondary"
+                    >
+                        Upload Another Resume
+                    </a>
+
+
+                    <a
+                        href="job-match.html"
+                        class="btn btn-primary"
+                    >
+                        View Job Matches
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<script src="../js/api.js"></script>
+
+<script src="../js/analysis.js"></script>
+
+
+</body>
+
+</html>

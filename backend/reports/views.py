@@ -7,8 +7,8 @@ API views for Resume Analyzer Reports.
 import os
 
 from django.conf import settings
-from django.http import FileResponse
 from django.core.files import File
+from django.http import FileResponse
 
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -25,29 +25,15 @@ from .services.pdf_generator import generate_pdf
 
 
 # ============================================================
-# Helper Function
+# HELPER
 # ============================================================
 
 def generate_report_pdf(resume_id):
-    """
-    Build report data and generate PDF.
-
-    Returns:
-        (report_data, pdf_path)
-    """
-
-    # --------------------------------------------------------
-    # Build report
-    # --------------------------------------------------------
 
     report_data = build_report(resume_id)
 
     if not report_data:
         return None, None
-
-    # --------------------------------------------------------
-    # Reports directory
-    # --------------------------------------------------------
 
     reports_dir = os.path.join(
         settings.MEDIA_ROOT,
@@ -59,18 +45,10 @@ def generate_report_pdf(resume_id):
         exist_ok=True
     )
 
-    # --------------------------------------------------------
-    # PDF path
-    # --------------------------------------------------------
-
     pdf_path = os.path.join(
         reports_dir,
         f"report_{resume_id}.pdf"
     )
-
-    # --------------------------------------------------------
-    # Generate PDF
-    # --------------------------------------------------------
 
     try:
 
@@ -82,38 +60,27 @@ def generate_report_pdf(resume_id):
     except Exception as e:
 
         print(
-            f"PDF generation error: {e}"
+            "PDF GENERATION ERROR:",
+            e
         )
 
         return report_data, None
 
-    # --------------------------------------------------------
-    # Verify PDF
-    # --------------------------------------------------------
-
     if not os.path.exists(pdf_path):
-
         return report_data, None
 
     return report_data, pdf_path
 
 
 # ============================================================
-# 1. Generate Report
+# 1. GENERATE REPORT
 # ============================================================
 
 class ReportGenerateView(APIView):
-    """
-    Generate a PDF report for a resume.
-    """
 
     permission_classes = [IsAuthenticated]
 
     def get(self, request, resume_id):
-
-        # ----------------------------------------------------
-        # Get Resume belonging to logged-in user
-        # ----------------------------------------------------
 
         try:
 
@@ -131,10 +98,6 @@ class ReportGenerateView(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-
-        # ----------------------------------------------------
-        # Build + Generate PDF
-        # ----------------------------------------------------
 
         report_data, pdf_path = generate_report_pdf(
             resume_id
@@ -160,10 +123,6 @@ class ReportGenerateView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        # ----------------------------------------------------
-        # Extract summary values
-        # ----------------------------------------------------
-
         summary = report_data.get(
             "summary",
             {}
@@ -174,64 +133,66 @@ class ReportGenerateView(APIView):
             0
         )
 
-        job_matches = summary.get(
+        job_matches = report_data.get(
             "job_matches",
-            0
+            []
+        )
+
+        match_score = 0
+
+        if job_matches:
+
+            match_score = job_matches[0].get(
+                "match_score",
+                0
+            )
+
+        report_info = report_data.get(
+            "report_info",
+            {}
+        )
+
+        candidate = report_data.get(
+            "candidate",
+            {}
+        )
+
+        recommendations = report_data.get(
+            "recommendations",
+            []
         )
 
         # ----------------------------------------------------
-        # Save report in database
+        # SAVE REPORT
         # ----------------------------------------------------
 
         report = Report.objects.create(
 
             resume=resume,
 
-            report_title=report_data.get(
-                "report_info",
-                {}
-            ).get(
+            report_title=report_info.get(
                 "title",
                 "AI Resume Analyzer Report"
             ),
 
-            report_version=report_data.get(
-                "report_info",
-                {}
-            ).get(
+            report_version=report_info.get(
                 "version",
                 "1.0"
             ),
 
             ats_score=ats_score,
 
-            match_score=(
-                report_data.get(
-                    "job_matches",
-                    [{}]
-                )[0].get(
-                    "match_score",
-                    0
-                )
-                if report_data.get("job_matches")
-                else 0
-            ),
+            match_score=match_score,
 
-            parsed_data=report_data.get(
-                "candidate",
-                {}
-            ),
+            parsed_data=candidate,
 
-            recommendations=report_data.get(
-                "recommendations",
-                []
-            ),
+            recommendations=recommendations,
 
             status="Generated"
         )
 
         # ----------------------------------------------------
-        # Save PDF into FileField
+        # SAVE PDF
         # ----------------------------------------------------
 
         try:
@@ -249,7 +210,13 @@ class ReportGenerateView(APIView):
 
         except Exception as e:
 
+            print(
+                "PDF SAVE ERROR:",
+                e
+            )
+
             report.status = "Failed"
+
             report.save(
                 update_fields=["status"]
             )
@@ -271,31 +238,18 @@ class ReportGenerateView(APIView):
             report.pdf_file.url
         )
 
-        # ----------------------------------------------------
-        # Serialize report
-        # ----------------------------------------------------
-
         serializer = ReportSerializer(
             report
         )
-
-        # ----------------------------------------------------
-        # Final response
-        # ----------------------------------------------------
 
         return Response(
             {
                 "success": True,
                 "message": "Report generated successfully.",
-
                 "report_id": report.id,
-
                 "resume_id": resume_id,
-
                 "pdf_url": pdf_url,
-
                 "report": report_data,
-
                 "database_report": serializer.data
             },
             status=status.HTTP_200_OK
@@ -303,13 +257,10 @@ class ReportGenerateView(APIView):
 
 
 # ============================================================
-# 2. Report List
+# 2. REPORT LIST
 # ============================================================
 
 class ReportListView(APIView):
-    """
-    Return all reports belonging to the logged-in user.
-    """
 
     permission_classes = [IsAuthenticated]
 
@@ -337,13 +288,10 @@ class ReportListView(APIView):
 
 
 # ============================================================
-# 3. Report History
+# 3. REPORT HISTORY
 # ============================================================
 
 class ReportHistoryView(APIView):
-    """
-    Return generated report history.
-    """
 
     permission_classes = [IsAuthenticated]
 
@@ -371,17 +319,18 @@ class ReportHistoryView(APIView):
 
 
 # ============================================================
-# 4. Report Detail
+# 4. REPORT DETAIL
 # ============================================================
 
 class ReportDetailView(APIView):
-    """
-    Get one report.
-    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, report_id):
+    def get(
+        self,
+        request,
+        report_id
+    ):
 
         try:
 
@@ -414,21 +363,18 @@ class ReportDetailView(APIView):
 
 
 # ============================================================
-# 5. Download PDF
+# 5. DOWNLOAD PDF
 # ============================================================
 
 class ReportPDFView(APIView):
-    """
-    Generate and download a PDF report.
-    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, resume_id):
-
-        # ----------------------------------------------------
-        # Check Resume
-        # ----------------------------------------------------
+    def get(
+        self,
+        request,
+        resume_id
+    ):
 
         try:
 
@@ -447,10 +393,6 @@ class ReportPDFView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # ----------------------------------------------------
-        # Generate PDF
-        # ----------------------------------------------------
-
         report_data, pdf_path = generate_report_pdf(
             resume_id
         )
@@ -465,12 +407,11 @@ class ReportPDFView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        # ----------------------------------------------------
-        # Download PDF
-        # ----------------------------------------------------
-
         return FileResponse(
-            open(pdf_path, "rb"),
+            open(
+                pdf_path,
+                "rb"
+            ),
             as_attachment=True,
             filename=f"resume_report_{resume_id}.pdf",
             content_type="application/pdf"
@@ -478,21 +419,18 @@ class ReportPDFView(APIView):
 
 
 # ============================================================
-# 6. Delete Report
+# 6. DELETE REPORT
 # ============================================================
 
 class ReportDeleteView(APIView):
-    """
-    Delete a report.
-    """
 
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, report_id):
-
-        # ----------------------------------------------------
-        # Find report belonging to logged-in user
-        # ----------------------------------------------------
+    def delete(
+        self,
+        request,
+        report_id
+    ):
 
         try:
 
@@ -512,7 +450,7 @@ class ReportDeleteView(APIView):
             )
 
         # ----------------------------------------------------
-        # Delete PDF
+        # DELETE PDF FILE
         # ----------------------------------------------------
 
         try:
@@ -530,11 +468,12 @@ class ReportDeleteView(APIView):
         except Exception as e:
 
             print(
-                f"PDF deletion warning: {e}"
+                "PDF DELETE WARNING:",
+                e
             )
 
         # ----------------------------------------------------
-        # Delete database record
+        # DELETE DATABASE RECORD
         # ----------------------------------------------------
 
         report.delete()

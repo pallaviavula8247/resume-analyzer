@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- ================================================
+         SIDEBAR
+         ================================================ -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+            <a
+                href="dashboard.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                <span>Upload Resume</span>
+            </a>
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                <span>Resume Analysis</span>
+            </a>
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                <span>Job Matches</span>
+            </a>
+
+            <a
+                href="recommendations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                <span>Recommendations</span>
+            </a>
+
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                <span>Reports</span>
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                <span>Profile</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================
+         MAIN
+         ================================================ -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <h2>
+                    Dashboard
+                </h2>
+
+                <p>
+                    Your career intelligence workspace
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    P
+                </div>
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        Loading...
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        Loading...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================================
+             DASHBOARD CONTENT
+             ================================================ -->
+
+        <section class="dashboard-content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-section">
+
+                <div>
+
+                    <p class="welcome-label">
+                        Welcome back 👋
+                    </p>
+
+                    <h1 id="welcomeName">
+                        Loading...
+                    </h1>
+
+                    <p>
+                        Ready to improve your resume
+                        and move closer to your career goals?
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="upload-resume.html"
+                    class="btn btn-primary"
+                >
+                    + Upload Resume
+                </a>
+
+            </div>
+
+
+            <!-- ============================================
+                 STATS
+                 ============================================ -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <span class="stat-label">
+                            ATS Score
+                        </span>
+
+                        <strong
+                            id="atsScore"
+                            class="stat-value"
+                        >
+                            —
+                        </strong>
+
+                        <span class="stat-description">
+                            Resume compatibility
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span class="stat-label">
+                            Skills
+                        </span>
+
+                        <strong
+                            id="skillsCount"
+                            class="stat-value"
+                        >
+                            —
+                        </strong>
+
+                        <span class="stat-description">
+                            Skills identified
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ⌕
+                    </div>
+
+                    <div>
+
+                        <span class="stat-label">
+                            Job Matches
+                        </span>
+
+                        <strong
+                            id="jobMatches"
+                            class="stat-value"
+                        >
+                            —
+                        </strong>
+
+                        <span class="stat-description">
+                            Relevant opportunities
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <span class="stat-label">
+                            Reports
+                        </span>
+
+                        <strong
+                            id="reportsCount"
+                            class="stat-value"
+                        >
+                            —
+                        </strong>
+
+                        <span class="stat-description">
+                            Generated reports
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================
+                 MAIN GRID
+                 ============================================ -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- RESUME STATUS -->
+
+                <div class="dashboard-card resume-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Resume Status
+                            </h3>
+
+                            <p>
+                                Your latest resume
+                            </p>
+
+                        </div>
+
+                        <span
+                            id="resumeStatusBadge"
+                            class="badge badge-warning"
+                        >
+                            Not uploaded
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="resumeEmptyState"
+                        class="resume-empty"
+                    >
+
+                        <div class="empty-icon">
+                            ↑
+                        </div>
+
+                        <h4>
+                            Upload your resume
+                        </h4>
+
+                        <p>
+                            Upload a PDF resume to unlock
+                            AI-powered analysis, ATS scoring,
+                            job matching and recommendations.
+                        </p>
+
+                        <a
+                            href="upload-resume.html"
+                            class="btn btn-primary"
+                        >
+                            Upload Resume
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        id="resumeDetails"
+                        class="resume-details"
+                        style="display: none;"
+                    >
+
+                        <div class="resume-file-icon">
+                            PDF
+                        </div>
+
+                        <div class="resume-file-info">
+
+                            <strong id="resumeFileName">
+                                Resume.pdf
+                            </strong>
+
+                            <span id="resumeUploadDate">
+                                Uploaded recently
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="analysis.html"
+                            class="btn btn-secondary"
+                        >
+                            View Analysis
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                            <p>
+                                Continue where you left off
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a
+                            href="upload-resume.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-action-icon purple">
+                                ↑
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Upload Resume
+                                </strong>
+
+                                <span>
+                                    Add a new resume
+                                </span>
+
+                            </div>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="analysis.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-action-icon green">
+                                ◈
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Analyze Resume
+                                </strong>
+
+                                <span>
+                                    Check your resume score
+                                </span>
+
+                            </div>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="job-match.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-action-icon orange">
+                                ⌕
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Find Jobs
+                                </strong>
+
+                                <span>
+                                    Discover matching jobs
+                                </span>
+
+                            </div>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="reports.html"
+                            class="quick-action"
+                        >
+
+                            <div class="quick-action-icon blue">
+                                ▤
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    View Reports
+                                </strong>
+
+                                <span>
+                                    Review your reports
+                                </span>
+
+                            </div>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================
+                 GETTING STARTED
+                 ============================================ -->
+
+            <div class="dashboard-card getting-started">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <h3>
+                            Get Started with ResumeAI
+                        </h3>
+
+                        <p>
+                            Follow these steps to get the most
+                            out of your career analysis.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="steps-grid">
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Upload your resume
+                            </strong>
+
+                            <p>
+                                Upload your latest PDF resume.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Analyze your profile
+                            </strong>
+
+                            <p>
+                                Get ATS, skills and experience insights.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Explore opportunities
+                            </strong>
+
+                            <p>
+                                Find jobs and personalized recommendations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>

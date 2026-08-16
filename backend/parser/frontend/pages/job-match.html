@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Job Matches | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/job-match.css"
+    >
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+            <a
+                href="job-match.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+            <a
+                href="recommendations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendations
+            </a>
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+                type="button"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ☰
+            </button>
+
+            <div class="topbar-title">
+
+                <h2>
+                    Job Matches
+                </h2>
+
+                <p>
+                    Discover roles that match your resume
+                </p>
+
+            </div>
+
+            <div class="topbar-user">
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="job-match-content">
+
+            <div class="page-header">
+
+                <span class="page-eyebrow">
+                    AI CAREER MATCHING
+                </span>
+
+                <h1>
+                    Jobs matched to your resume
+                </h1>
+
+                <p>
+                    Our AI compares your resume skills,
+                    experience and qualifications with
+                    suitable job roles.
+                </p>
+
+            </div>
+
+
+            <!-- LOADING -->
+
+            <div
+                id="jobLoading"
+                class="job-state"
+            >
+
+                <div class="loading-spinner"></div>
+
+                <h3>
+                    Finding your best job matches...
+                </h3>
+
+                <p>
+                    Please wait while we analyze your resume.
+                </p>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="jobError"
+                class="job-state error-state"
+                style="display: none;"
+            >
+
+                <div class="state-icon">
+                    !
+                </div>
+
+                <h3>
+                    Unable to load job matches
+                </h3>
+
+                <p id="jobErrorMessage">
+                    Something went wrong.
+                </p>
+
+                <button
+                    id="retryButton"
+                    class="job-button primary"
+                    type="button"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+
+            <!-- RESULTS -->
+
+            <div
+                id="jobResults"
+                style="display: none;"
+            >
+
+                <!-- SUMMARY -->
+
+                <div class="match-summary">
+
+                    <div class="summary-card">
+
+                        <span>
+                            Matching Roles
+                        </span>
+
+                        <strong id="totalJobs">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-card">
+
+                        <span>
+                            Best Match
+                        </span>
+
+                        <strong id="bestMatch">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-card">
+
+                        <span>
+                            Resume Score
+                        </span>
+
+                        <strong id="resumeScore">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- JOB LIST -->
+
+                <div class="jobs-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <h2>
+                                Recommended roles
+                            </h2>
+
+                            <p>
+                                Roles with the strongest
+                                match to your profile.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="jobList"
+                        class="job-list"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/job-match.js"></script>
+
+</body>
+</html>

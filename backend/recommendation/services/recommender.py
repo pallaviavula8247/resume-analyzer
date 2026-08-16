@@ -3,15 +3,13 @@ recommendation/services/recommender.py
 
 Main AI Recommendation Engine.
 
-Combines:
-1. Career Recommendations
-2. Course Recommendations
-3. Project Recommendations
-4. Learning Roadmap
-5. Resume Improvement Tips
-
-This service generates recommendations and saves them
-to the Recommendation model.
+Generates:
+1. Career recommendations
+2. Skill recommendations
+3. Course recommendations
+4. Project recommendations
+5. Learning roadmap
+6. Resume improvement tips
 """
 
 from recommendation.models import Recommendation
@@ -23,6 +21,10 @@ from recommendation.services.roadmap import generate_roadmap
 from recommendation.services.resume_tips import generate_resume_tips
 
 
+# ==========================================================
+# HELPER FUNCTIONS
+# ==========================================================
+
 def _normalize_skills(skills):
     """
     Convert resume skills into a clean list.
@@ -31,6 +33,7 @@ def _normalize_skills(skills):
     if not skills:
         return []
 
+    # If skills are stored as a string
     if isinstance(skills, str):
         return [
             skill.strip()
@@ -38,7 +41,8 @@ def _normalize_skills(skills):
             if skill.strip()
         ]
 
-    if isinstance(skills, list):
+    # If skills are stored as a list/tuple
+    if isinstance(skills, (list, tuple)):
         return [
             str(skill).strip()
             for skill in skills
@@ -48,128 +52,298 @@ def _normalize_skills(skills):
     return []
 
 
-def generate_recommendations(resume, ats_analysis=None):
+def _safe_list(value):
     """
-    Generate complete AI recommendations for a resume.
-
-    Parameters
-    ----------
-    resume : Resume
-        Resume model instance.
-
-    ats_analysis : ATSAnalysis, optional
-        ATS analysis instance used to generate resume tips.
-
-    Returns
-    -------
-    dict
-        Complete recommendation data.
+    Make sure a value is always returned as a list.
     """
 
-    # ==================================================
-    # 1. Extract Resume Skills
-    # ==================================================
+    if value is None:
+        return []
 
-    skills = _normalize_skills(resume.skills)
+    if isinstance(value, list):
+        return value
 
-    # ==================================================
-    # 2. Career Recommendations
-    # ==================================================
+    if isinstance(value, tuple):
+        return list(value)
 
-    careers = recommend_careers(skills)
+    try:
+        return list(value)
+    except (TypeError, ValueError):
+        return []
 
-    # Make sure careers is always a list
-    if not isinstance(careers, list):
-        careers = list(careers) if careers else []
 
-    # ==================================================
-    # 3. Course Recommendations
-    # ==================================================
+# ==========================================================
+# MAIN RECOMMENDATION ENGINE
+# ==========================================================
 
-    courses = recommend_courses(careers)
+def generate_recommendations(
+    resume,
+    ats_analysis=None,
+):
+    """
+    Generate and save complete recommendations
+    for a resume.
+    """
 
-    if not isinstance(courses, list):
-        courses = list(courses) if courses else []
+    # ======================================================
+    # 1. RESUME SKILLS
+    # ======================================================
 
-    # ==================================================
-    # 4. Project Recommendations
-    # ==================================================
+    skills = _normalize_skills(
+        resume.skills
+    )
 
-    projects = recommend_projects(careers)
+    print(
+        "Resume skills:",
+        skills
+    )
 
-    if not isinstance(projects, list):
-        projects = list(projects) if projects else []
+    # ======================================================
+    # 2. CAREER RECOMMENDATIONS
+    # ======================================================
 
-    # ==================================================
-    # 5. Learning Roadmap
-    # ==================================================
+    try:
+
+        careers = recommend_careers(
+            skills
+        )
+
+    except Exception as error:
+
+        print(
+            "Career recommendation error:",
+            error
+        )
+
+        careers = []
+
+    careers = _safe_list(careers)
+
+    print(
+        "Recommended careers:",
+        careers
+    )
+
+    # ======================================================
+    # 3. COURSE RECOMMENDATIONS
+    # ======================================================
+
+    try:
+
+        courses = recommend_courses(
+            careers
+        )
+
+    except Exception as error:
+
+        print(
+            "Course recommendation error:",
+            error
+        )
+
+        courses = []
+
+    courses = _safe_list(courses)
+
+    print(
+        "Recommended courses:",
+        courses
+    )
+
+    # ======================================================
+    # 4. PROJECT RECOMMENDATIONS
+    # ======================================================
+
+    try:
+
+        projects = recommend_projects(
+            careers
+        )
+
+    except Exception as error:
+
+        print(
+            "Project recommendation error:",
+            error
+        )
+
+        projects = []
+
+    projects = _safe_list(projects)
+
+    print(
+        "Recommended projects:",
+        projects
+    )
+
+    # ======================================================
+    # 5. LEARNING ROADMAP
+    # ======================================================
 
     roadmap = {}
 
     for career in careers:
 
         try:
-            roadmap[career] = generate_roadmap(career)
-        except Exception:
-            roadmap[career] = []
 
-    # ==================================================
-    # 6. Resume Improvement Tips
-    # ==================================================
+            roadmap[str(career)] = (
+                generate_roadmap(career)
+            )
+
+        except Exception as error:
+
+            print(
+                "Roadmap error:",
+                career,
+                error
+            )
+
+            roadmap[str(career)] = []
+
+    # ======================================================
+    # 6. RESUME IMPROVEMENT TIPS
+    # ======================================================
 
     if ats_analysis:
+
         try:
+
             resume_tips = generate_resume_tips(
                 ats_analysis
             )
-        except Exception:
+
+        except Exception as error:
+
+            print(
+                "Resume tips error:",
+                error
+            )
+
             resume_tips = []
+
     else:
+
         resume_tips = []
 
-    if not isinstance(resume_tips, list):
-        resume_tips = list(resume_tips) if resume_tips else []
+    resume_tips = _safe_list(
+        resume_tips
+    )
 
-    # ==================================================
-    # 7. Build Recommendation Data
-    # ==================================================
+    print(
+        "Resume tips:",
+        resume_tips
+    )
+
+    # ======================================================
+    # 7. MISSING SKILLS
+    # ======================================================
+
+    missing_skills = []
+
+    if ats_analysis:
+
+        try:
+
+            missing_skills = _normalize_skills(
+                ats_analysis.missing_skills
+            )
+
+        except Exception as error:
+
+            print(
+                "Missing skills error:",
+                error
+            )
+
+            missing_skills = []
+
+    print(
+        "Recommended skills:",
+        missing_skills
+    )
+
+    # ======================================================
+    # 8. BUILD DATABASE DATA
+    # ======================================================
 
     recommendation_data = {
+
         "recommended_roles": careers,
-        "recommended_skills": (
-            ats_analysis.missing_skills
-            if ats_analysis and ats_analysis.missing_skills
-            else []
-        ),
+
+        "recommended_skills": missing_skills,
+
         "recommended_courses": courses,
+
         "recommended_projects": projects,
+
         "learning_roadmap": roadmap,
+
         "resume_tips": resume_tips,
     }
 
-    # ==================================================
-    # 8. Save / Update Recommendation
-    # ==================================================
+    # ======================================================
+    # 9. SAVE / UPDATE RECOMMENDATION
+    # ======================================================
 
-    recommendation, created = (
-        Recommendation.objects.update_or_create(
-            resume=resume,
-            defaults=recommendation_data,
+    try:
+
+        recommendation, created = (
+            Recommendation.objects.update_or_create(
+
+                resume=resume,
+
+                defaults=recommendation_data,
+            )
         )
-    )
 
-    # ==================================================
-    # 9. Return Complete Result
-    # ==================================================
+    except Exception as error:
+
+        print(
+            "Recommendation database error:",
+            error
+        )
+
+        raise error
+
+    # ======================================================
+    # 10. RETURN COMPLETE API DATA
+    # ======================================================
 
     return {
+
         "id": recommendation.id,
+
         "resume_id": resume.id,
-        "recommended_roles": recommendation.recommended_roles,
-        "recommended_skills": recommendation.recommended_skills,
-        "recommended_courses": recommendation.recommended_courses,
-        "recommended_projects": recommendation.recommended_projects,
-        "learning_roadmap": recommendation.learning_roadmap,
-        "resume_tips": recommendation.resume_tips,
+
+        "recommended_roles": (
+            recommendation.recommended_roles
+            or []
+        ),
+
+        "recommended_skills": (
+            recommendation.recommended_skills
+            or []
+        ),
+
+        "recommended_courses": (
+            recommendation.recommended_courses
+            or []
+        ),
+
+        "recommended_projects": (
+            recommendation.recommended_projects
+            or []
+        ),
+
+        "learning_roadmap": (
+            recommendation.learning_roadmap
+            or {}
+        ),
+
+        "resume_tips": (
+            recommendation.resume_tips
+            or []
+        ),
+
         "created": created,
     }

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/profile.css"
+    >
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+            <a
+                href="recommendations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendations
+            </a>
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+            <a
+                href="profile.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+                type="button"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ☰
+            </button>
+
+            <div class="topbar-title">
+
+                <h2>
+                    Profile
+                </h2>
+
+                <p>
+                    Manage your ResumeAI account
+                </p>
+
+            </div>
+
+            <div class="topbar-user">
+
+                <div
+                    id="topbarAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PROFILE CONTENT ================= -->
+
+        <section class="profile-page">
+
+            <div class="profile-header">
+
+                <span class="page-eyebrow">
+                    ACCOUNT SETTINGS
+                </span>
+
+                <h1>
+                    Your Profile
+                </h1>
+
+                <p>
+                    View and manage your personal account information.
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE CARD -->
+
+            <div class="profile-grid">
+
+                <!-- LEFT CARD -->
+
+                <div class="profile-summary card">
+
+                    <div
+                        id="profileAvatar"
+                        class="profile-avatar"
+                    >
+                        U
+                    </div>
+
+                    <h2 id="profileDisplayName">
+                        Loading...
+                    </h2>
+
+                    <p id="profileDisplayEmail">
+                        —
+                    </p>
+
+                    <div class="profile-status">
+
+                        <span class="status-dot"></span>
+
+                        Account Active
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT CARD -->
+
+                <div class="profile-form-card card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>
+                                Personal Information
+                            </h2>
+
+                            <p>
+                                Update your account details below.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="profileForm">
+
+                        <!-- FULL NAME -->
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="full_name"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Email"
+                                readonly
+                            >
+
+                            <small>
+                                Email address cannot be changed.
+                            </small>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter phone number"
+                            >
+
+                        </div>
+
+
+                        <!-- MESSAGE -->
+
+                        <div
+                            id="profileMessage"
+                            class="profile-message"
+                            style="display:none;"
+                        ></div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                id="saveProfileButton"
+                                class="btn-primary profile-save-button"
+                            >
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- SECURITY CARD -->
+
+            <div class="security-card card">
+
+                <div class="security-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <h3>
+                        Your account is secure
+                    </h3>
+
+                    <p>
+                        Your profile information is protected
+                        and connected to your authenticated account.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/profile.js"></script>
+
+</body>
+
+</html>

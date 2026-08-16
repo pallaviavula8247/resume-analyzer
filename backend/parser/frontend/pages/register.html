@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/auth.css"
+    >
+
+</head>
+
+<body>
+
+<main class="auth-page">
+
+    <div class="auth-wrapper">
+
+        <!-- =================================================
+             LEFT PANEL
+             ================================================= -->
+
+        <section class="auth-info">
+
+            <a
+                href="../index.html"
+                class="auth-brand"
+            >
+                ResumeAI
+            </a>
+
+            <h1>
+                Start building a stronger career profile.
+            </h1>
+
+            <p>
+                Create your account and use AI to understand
+                your resume, identify skill gaps, and improve
+                your job readiness.
+            </p>
+
+            <div class="auth-features">
+
+                <div class="auth-feature">
+
+                    <span class="auth-feature-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Analyze your resume
+                    </span>
+
+                </div>
+
+                <div class="auth-feature">
+
+                    <span class="auth-feature-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Identify missing skills
+                    </span>
+
+                </div>
+
+                <div class="auth-feature">
+
+                    <span class="auth-feature-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Get personalized recommendations
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REGISTER FORM
+             ================================================= -->
+
+        <section class="auth-form-panel">
+
+            <div class="auth-form-header">
+
+                <h2>
+                    Create account
+                </h2>
+
+                <p>
+                    Join ResumeAI and start analyzing your resume.
+                </p>
+
+            </div>
+
+
+            <div
+                id="registerMessage"
+                class="auth-message"
+            ></div>
+
+
+            <form
+                id="registerForm"
+                class="auth-form"
+            >
+
+                <div class="form-group">
+
+                    <label
+                        for="fullName"
+                        class="form-label"
+                    >
+                        Full name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        class="form-input"
+                        placeholder="Enter your full name"
+                        required
+                        autocomplete="name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        for="email"
+                        class="form-label"
+                    >
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="you@example.com"
+                        required
+                        autocomplete="email"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        for="phone"
+                        class="form-label"
+                    >
+                        Phone number
+                        <span
+                            style="
+                                color: var(--text-muted);
+                                font-weight: 400;
+                            "
+                        >
+                            (optional)
+                        </span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        class="form-input"
+                        placeholder="Enter phone number"
+                        autocomplete="tel"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        for="password"
+                        class="form-label"
+                    >
+                        Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            class="form-input"
+                            placeholder="Minimum 6 characters"
+                            required
+                            minlength="6"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        for="confirmPassword"
+                        class="form-label"
+                    >
+                        Confirm password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        class="form-input"
+                        placeholder="Re-enter your password"
+                        required
+                        minlength="6"
+                        autocomplete="new-password"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="registerButton"
+                    class="btn btn-primary auth-submit"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="auth-footer">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Sign in
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/register.js"></script>
+
+</body>
+
+</html>
