@@ -1,24 +1,38 @@
 from pathlib import Path
 from datetime import timedelta
 
+
+# =============================================================
+# BASE DIRECTORY
+# =============================================================
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --------------------------------------------------
-# Security
-# --------------------------------------------------
 
-SECRET_KEY = "django-insecure-change-this-key"
+# =============================================================
+# SECURITY
+# =============================================================
+
+SECRET_KEY = "django-insecure-change-this-in-production"
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
 
-# --------------------------------------------------
-# Installed Apps
-# --------------------------------------------------
+
+# =============================================================
+# APPLICATIONS
+# =============================================================
 
 INSTALLED_APPS = [
-    # Django Apps
+
+    # ---------------------------------------------------------
+    # Django
+    # ---------------------------------------------------------
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -26,103 +40,165 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Third Party Apps
+    # ---------------------------------------------------------
+    # Third-party
+    # ---------------------------------------------------------
+
     "rest_framework",
-    "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "corsheaders",
 
-    # Project Apps
+    # ---------------------------------------------------------
+    # Project apps
+    # ---------------------------------------------------------
+
     "users",
     "parser",
     "analyzer",
     "recommendation",
     "reports",
     "dashboard",
-    "resume",
 ]
 
-# --------------------------------------------------
-# Middleware
-# --------------------------------------------------
 
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-# --------------------------------------------------
-# URL Configuration
-# --------------------------------------------------
-
-ROOT_URLCONF = "config.urls"
-
-# --------------------------------------------------
-# Templates
-# --------------------------------------------------
-
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = "config.wsgi.application"
-
-# --------------------------------------------------
-# Database
-# --------------------------------------------------
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
-# --------------------------------------------------
-# Custom User Model
-# --------------------------------------------------
+# =============================================================
+# CUSTOM USER MODEL
+# =============================================================
+#
+# IMPORTANT:
+# Your project has a custom User model:
+#
+# users.models.User
+#
+# Django must use this instead of auth.User.
+#
+# =============================================================
 
 AUTH_USER_MODEL = "users.User"
 
-# --------------------------------------------------
-# Password Validation
-# --------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+# =============================================================
+# MIDDLEWARE
+# =============================================================
+
+MIDDLEWARE = [
+
+    "corsheaders.middleware.CorsMiddleware",
+
+    "django.middleware.security.SecurityMiddleware",
+
+    "django.contrib.sessions.middleware.SessionMiddleware",
+
+    "django.middleware.common.CommonMiddleware",
+
+    "django.middleware.csrf.CsrfViewMiddleware",
+
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+
+    "django.contrib.messages.middleware.MessageMiddleware",
+
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# --------------------------------------------------
-# Internationalization
-# --------------------------------------------------
+
+# =============================================================
+# URL CONFIGURATION
+# =============================================================
+
+ROOT_URLCONF = "config.urls"
+
+
+# =============================================================
+# TEMPLATES
+# =============================================================
+
+TEMPLATES = [
+
+    {
+        "BACKEND":
+            "django.template.backends.django.DjangoTemplates",
+
+        "DIRS": [],
+
+        "APP_DIRS": True,
+
+        "OPTIONS": {
+
+            "context_processors": [
+
+                "django.template.context_processors.request",
+
+                "django.contrib.auth.context_processors.auth",
+
+                "django.contrib.messages.context_processors.messages",
+
+            ],
+
+        },
+
+    },
+
+]
+
+
+# =============================================================
+# WSGI
+# =============================================================
+
+WSGI_APPLICATION = "config.wsgi.application"
+
+
+# =============================================================
+# DATABASE
+# =============================================================
+
+DATABASES = {
+
+    "default": {
+
+        "ENGINE":
+            "django.db.backends.sqlite3",
+
+        "NAME":
+            BASE_DIR / "db.sqlite3",
+
+    }
+
+}
+
+
+# =============================================================
+# PASSWORD VALIDATION
+# =============================================================
+
+AUTH_PASSWORD_VALIDATORS = [
+
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+
+]
+
+
+# =============================================================
+# INTERNATIONALIZATION
+# =============================================================
 
 LANGUAGE_CODE = "en-us"
 
@@ -132,82 +208,113 @@ USE_I18N = True
 
 USE_TZ = True
 
-# --------------------------------------------------
-# Static Files
-# --------------------------------------------------
+
+# =============================================================
+# STATIC FILES
+# =============================================================
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# --------------------------------------------------
-# Media Files
-# --------------------------------------------------
+
+# =============================================================
+# MEDIA FILES
+# =============================================================
+#
+# Uploaded resumes:
+#
+# media/resumes/
+#
+# Generated reports:
+#
+# media/reports/
+#
+# Browser URLs:
+#
+# http://127.0.0.1:8000/media/resumes/...
+#
+# http://127.0.0.1:8000/media/reports/...
+#
+# =============================================================
 
 MEDIA_URL = "/media/"
+
 MEDIA_ROOT = BASE_DIR / "media"
 
-# --------------------------------------------------
-# Default Primary Key
-# --------------------------------------------------
+
+# =============================================================
+# DEFAULT PRIMARY KEY
+# =============================================================
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# --------------------------------------------------
-# Django REST Framework
-# --------------------------------------------------
+
+# =============================================================
+# DJANGO REST FRAMEWORK
+# =============================================================
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
+
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": (
+
+    ],
+
+    "DEFAULT_PERMISSION_CLASSES": [
+
         "rest_framework.permissions.IsAuthenticated",
-    ),
+
+    ],
+
 }
 
-# --------------------------------------------------
-# JWT Settings
-# --------------------------------------------------
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": True,
-    "ALGORITHM": "HS256",
-    "SIGNING_KEY": SECRET_KEY,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-}
-
-# --------------------------------------------------
+# =============================================================
 # CORS
-# --------------------------------------------------
+# =============================================================
+#
+# Plain HTML / CSS / JavaScript frontend
+#
+# =============================================================
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# --------------------------------------------------
-# Upload Limits
-# --------------------------------------------------
 
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
+# =============================================================
+# CSRF TRUSTED ORIGINS
+# =============================================================
 
-# --------------------------------------------------
-# Login URLs
-# --------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
 
-LOGIN_URL = "/api/users/login/"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+    "http://127.0.0.1:8000",
 
-# --------------------------------------------------
-# Email
-# --------------------------------------------------
+    "http://localhost:8000",
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+]
+
+
+# =============================================================
+# JWT SETTINGS
+# =============================================================
+
+SIMPLE_JWT = {
+
+    "ACCESS_TOKEN_LIFETIME":
+        timedelta(minutes=60),
+
+    "REFRESH_TOKEN_LIFETIME":
+        timedelta(days=7),
+
+    "ROTATE_REFRESH_TOKENS":
+        True,
+
+    "BLACKLIST_AFTER_ROTATION":
+        False,
+
+    "AUTH_HEADER_TYPES":
+        ("Bearer",),
+
+}
+

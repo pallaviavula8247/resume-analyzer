@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reports | ResumeAI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/reports.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html">
+                Resume<span>AI</span>
+            </a>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">
+                Workspace
+            </p>
+
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="upload-resume.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">↑</span>
+                Upload Resume
+            </a>
+
+
+            <a
+                href="analysis.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                Resume Analysis
+            </a>
+
+
+            <a
+                href="job-match.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⌕</span>
+                Job Matches
+            </a>
+
+
+            <a
+                href="recommendation.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">✦</span>
+                Recommendation
+            </a>
+
+
+            <p class="nav-section-title">
+                Manage
+            </p>
+
+
+            <a
+                href="reports.html"
+                class="nav-item active"
+            >
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+                type="button"
+            >
+
+                <span>↪</span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <h2>
+                    Reports
+                </h2>
+
+                <p>
+                    Your resume analysis reports
+                </p>
+
+            </div>
+
+
+            <div class="topbar-user">
+
+                <div
+                    id="userAvatar"
+                    class="user-avatar"
+                >
+                    U
+                </div>
+
+
+                <div class="topbar-user-info">
+
+                    <strong id="topbarUserName">
+                        User
+                    </strong>
+
+                    <span id="topbarUserEmail">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             REPORT CONTENT
+        ================================================== -->
+
+        <section class="reports-content">
+
+
+            <div class="page-header">
+
+                <span class="page-eyebrow">
+                    RESUME REPORT CENTER
+                </span>
+
+
+                <h1>
+                    Your Resume Reports
+                </h1>
+
+
+                <p>
+                    Generate, view and download detailed
+                    AI-powered resume analysis reports.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 GENERATE REPORT CARD
+            ================================================== -->
+
+            <div class="generate-card">
+
+                <div class="generate-info">
+
+                    <div class="generate-icon">
+                        ✦
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Generate New Report
+                        </h2>
+
+                        <p>
+                            Create a complete report containing
+                            your ATS score, job matches,
+                            resume information and recommendations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="generateReportButton"
+                    class="report-button primary"
+                    type="button"
+                >
+
+                    <span>
+                        Generate Report
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 MESSAGE
+            ================================================== -->
+
+            <div
+                id="reportMessage"
+                class="report-message"
+                style="display:none;"
+            >
+            </div>
+
+
+            <!-- =================================================
+                 LOADING
+            ================================================== -->
+
+            <div
+                id="reportLoading"
+                class="report-state"
+                style="display:none;"
+            >
+
+                <div class="loading-spinner"></div>
+
+                <h3>
+                    Generating your report...
+                </h3>
+
+                <p>
+                    Please wait while we prepare your PDF report.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+            <div
+                id="reportSummary"
+                class="report-summary"
+                style="display:none;"
+            >
+
+                <div class="summary-card">
+
+                    <span>
+                        Total Reports
+                    </span>
+
+                    <strong id="totalReports">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Latest ATS Score
+                    </span>
+
+                    <strong id="latestATS">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Latest Match Score
+                    </span>
+
+                    <strong id="latestMatch">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPORT HISTORY
+            ================================================== -->
+
+            <div class="reports-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>
+                            Report History
+                        </h2>
+
+                        <p>
+                            Previously generated reports
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="reportList"
+                    class="report-list"
+                >
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="../js/api.js"></script>
+
+<script src="../js/reports.js"></script>
+
+</body>
+
+</html>

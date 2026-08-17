@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register | Resume AI</title>
+
+    <!-- GLOBAL CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <!-- AUTH CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/auth.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+
+            <!-- =====================================================
+                 LEFT BRAND SECTION
+                 ===================================================== -->
+
+            <section class="auth-brand">
+
+                <div class="auth-logo">
+
+                    <div class="auth-logo-icon">
+                        ✦
+                    </div>
+
+                    Resume AI
+
+                </div>
+
+
+                <div class="auth-brand-content">
+
+                    <h1>
+
+                        Build a
+                        <span>better career</span>
+                        with AI.
+
+                    </h1>
+
+
+                    <p>
+
+                        Create your account and unlock
+                        AI-powered resume analysis, job
+                        matching, recommendations, and
+                        career insights.
+
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURES -->
+
+                <div class="auth-features">
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        AI-powered resume analysis
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        Smart job matching
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        Personalized recommendations
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        Professional career reports
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================================
+                 RIGHT REGISTER SECTION
+                 ===================================================== -->
+
+            <section class="auth-form-section">
+
+
+                <form
+                    id="registerForm"
+                    class="auth-form"
+                >
+
+
+                    <!-- HEADER -->
+
+                    <div class="auth-form-header">
+
+                        <h2>
+                            Create your account
+                        </h2>
+
+                        <p>
+                            Start your AI-powered career journey.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="registerMessage"
+                        class="auth-message"
+                    ></div>
+
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="name"
+                        >
+                            Full Name
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-input"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="email"
+                        >
+                            Email Address
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="password"
+                        >
+                            Password
+                        </label>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="confirmPassword"
+                        >
+                            Confirm Password
+                        </label>
+
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            class="form-input"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- TERMS -->
+
+                    <div class="auth-terms">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                required
+                            >
+
+                            <span>
+                                I agree to the Terms &
+                                Privacy Policy.
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button
+                        type="submit"
+                        id="registerButton"
+                        class="auth-submit"
+                    >
+
+                        Create Account
+
+                    </button>
+
+
+
+                    <!-- LOGIN LINK -->
+
+                    <div class="auth-footer">
+
+                        <span>
+                            Already have an account?
+                        </span>
+
+
+                        <a href="login.html">
+                            Sign in
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         API MUST LOAD FIRST
+         ===================================================== -->
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/register.js"></script>
+
+
+</body>
+
+</html>

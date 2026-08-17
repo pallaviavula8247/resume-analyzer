@@ -1,0 +1,787 @@
+/* =========================================================
+   RESUME AI - AUTHENTICATION
+   PREMIUM PURPLE / BLUE AI SAAS
+   Login + Register
+   ========================================================= */
+
+
+/* =========================================================
+   AUTH PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(124, 58, 237, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(59, 130, 246, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #f8f7ff,
+            #f5f3ff 50%,
+            #eff6ff
+        );
+}
+
+
+/* =========================================================
+   MAIN AUTH CONTAINER
+   ========================================================= */
+
+.auth-container {
+    width: min(1050px, 100%);
+
+    min-height: 650px;
+
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(139, 92, 246, 0.15);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 30px 80px rgba(76, 29, 149, 0.14),
+        0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   LEFT BRAND PANEL
+   ========================================================= */
+
+.auth-brand {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 55px;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(129, 140, 248, 0.35),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(168, 85, 247, 0.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #2e1065,
+            #4c1d95 42%,
+            #6d28d9 72%,
+            #4338ca
+        );
+}
+
+
+/* decorative circles */
+
+.auth-brand::before {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    right: -110px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.auth-brand::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    left: -100px;
+    bottom: -90px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.auth-logo {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    letter-spacing: -0.4px;
+}
+
+
+.auth-logo-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   BRAND CONTENT
+   ========================================================= */
+
+.auth-brand-content {
+    position: relative;
+    z-index: 2;
+
+    margin-top: auto;
+    margin-bottom: 45px;
+}
+
+
+.auth-brand-content h1 {
+    max-width: 480px;
+
+    font-size: clamp(38px, 4vw, 56px);
+
+    line-height: 1.08;
+
+    letter-spacing: -2px;
+
+    font-weight: 800;
+}
+
+
+.auth-brand-content h1 span {
+    display: block;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ddd6fe,
+            #bfdbfe
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+.auth-brand-content p {
+    max-width: 470px;
+
+    margin-top: 22px;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.auth-features {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+
+.auth-feature {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.auth-feature-icon {
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.2);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   RIGHT FORM SECTION
+   ========================================================= */
+
+.auth-form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.auth-form {
+    width: 100%;
+    max-width: 410px;
+}
+
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+
+.auth-form-header {
+    margin-bottom: 30px;
+}
+
+
+.auth-form-header h2 {
+    margin-bottom: 8px;
+
+    color: #18102f;
+
+    font-size: 30px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.8px;
+
+    font-weight: 800;
+}
+
+
+.auth-form-header p {
+    color: #7c6f91;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.auth-form .form-label {
+    margin-bottom: 8px;
+
+    color: #312e3f;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.auth-form .form-input {
+    width: 100%;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    color: #18102f;
+
+    background: #fafaff;
+
+    border:
+        1px solid #ddd6fe;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.auth-form .form-input::placeholder {
+    color: #aaa2b8;
+}
+
+
+.auth-form .form-input:hover {
+    border-color: #c4b5fd;
+
+    background: #ffffff;
+}
+
+
+.auth-form .form-input:focus {
+    background: #ffffff;
+
+    border-color: #7c3aed;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, 0.10);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.auth-submit {
+    position: relative;
+
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4c1d95,
+            #6d28d9 48%,
+            #4f46e5
+        );
+
+    box-shadow:
+        0 10px 24px
+        rgba(109, 40, 217, 0.28);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.auth-submit:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 15px 30px
+        rgba(109, 40, 217, 0.35);
+
+    filter: brightness(1.05);
+}
+
+
+.auth-submit:active {
+    transform: translateY(0);
+}
+
+
+.auth-submit:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow:
+        0 5px 15px
+        rgba(109, 40, 217, 0.15);
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.auth-message {
+    min-height: 0;
+
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    transition: all 0.2s ease;
+}
+
+
+.auth-message:empty {
+    display: none;
+}
+
+
+.auth-message.error {
+    padding: 11px 13px;
+
+    color: #b91c1c;
+
+    background: #fef2f2;
+
+    border:
+        1px solid #fecaca;
+}
+
+
+.auth-message.success {
+    padding: 11px 13px;
+
+    color: #047857;
+
+    background: #ecfdf5;
+
+    border:
+        1px solid #a7f3d0;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.auth-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    margin-top: 24px;
+
+    color: #7c6f91;
+
+    font-size: 13px;
+}
+
+
+.auth-footer a {
+    color: #6d28d9;
+
+    font-weight: 700;
+
+    transition: color 0.2s ease;
+}
+
+
+.auth-footer a:hover {
+    color: #4c1d95;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   OPTIONAL DIVIDER
+   ========================================================= */
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 24px 0;
+
+    color: #a8a1b5;
+
+    font-size: 12px;
+}
+
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #ede9fe;
+}
+
+
+/* =========================================================
+   PASSWORD / INPUT ICON AREA
+   ========================================================= */
+
+.auth-input-wrapper {
+    position: relative;
+}
+
+
+.auth-input-wrapper .form-input {
+    padding-right: 45px;
+}
+
+
+.auth-input-icon {
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9b8eae;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SMALL AI BADGE
+   ========================================================= */
+
+.auth-ai-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 15px;
+
+    padding: 6px 10px;
+
+    color: #6d28d9;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f3ff,
+            #faf5ff
+        );
+
+    border:
+        1px solid #ddd6fe;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.auth-ai-badge::before {
+    content: "✦";
+
+    color: #7c3aed;
+}
+
+
+/* =========================================================
+   RESPONSIVE TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .auth-container {
+        grid-template-columns: 1fr;
+
+        max-width: 550px;
+    }
+
+    .auth-brand {
+        min-height: 400px;
+
+        padding: 40px;
+    }
+
+    .auth-brand-content {
+        margin-top: 70px;
+        margin-bottom: 30px;
+    }
+
+    .auth-brand-content h1 {
+        font-size: 42px;
+    }
+
+    .auth-form-section {
+        padding: 45px 40px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        padding: 15px;
+    }
+
+    .auth-container {
+        border-radius: 20px;
+    }
+
+    .auth-brand {
+        min-height: 360px;
+
+        padding: 30px 25px;
+    }
+
+    .auth-logo {
+        font-size: 18px;
+    }
+
+    .auth-logo-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .auth-brand-content {
+        margin-top: 55px;
+        margin-bottom: 25px;
+    }
+
+    .auth-brand-content h1 {
+        font-size: 34px;
+
+        letter-spacing: -1.3px;
+    }
+
+    .auth-brand-content p {
+        margin-top: 15px;
+
+        font-size: 13px;
+
+        line-height: 1.65;
+    }
+
+    .auth-feature {
+        font-size: 12px;
+    }
+
+    .auth-form-section {
+        padding: 35px 25px;
+    }
+
+    .auth-form-header h2 {
+        font-size: 26px;
+    }
+
+    .auth-form .form-input {
+        height: 48px;
+    }
+
+    .auth-submit {
+        height: 50px;
+    }
+
+    .auth-footer {
+        flex-wrap: wrap;
+    }
+}
+

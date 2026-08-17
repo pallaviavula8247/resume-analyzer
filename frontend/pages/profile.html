@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | Resume AI</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../css/global.css">
+
+    <!-- Profile CSS -->
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">
+                    ✦
+                </div>
+
+                <div>
+                    <h2>Resume AI</h2>
+                    <span>Career Intelligence</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="sidebar-link">
+                    <span class="sidebar-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="upload.html" class="sidebar-link">
+                    <span class="sidebar-icon">↑</span>
+                    <span>Analyze Resume</span>
+                </a>
+
+                <a href="reports.html" class="sidebar-link">
+                    <span class="sidebar-icon">▤</span>
+                    <span>Reports</span>
+                </a>
+
+                <a href="profile.html" class="sidebar-link active">
+                    <span class="sidebar-icon">◉</span>
+                    <span>Profile</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- ================= MAIN AREA ================= -->
+
+        <main class="main-area">
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <button
+                    type="button"
+                    class="menu-button"
+                    id="menuButton"
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
+
+                <div class="topbar-title">
+                    Profile
+                </div>
+
+                <div class="topbar-user">
+
+                    <div class="topbar-avatar" id="topbarAvatar">
+                        U
+                    </div>
+
+                    <div class="topbar-user-info">
+
+                        <strong id="topbarUserName">
+                            User
+                        </strong>
+
+                        <span id="topbarUserEmail">
+                            user@example.com
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="logout-button"
+                        id="logoutButton"
+                        title="Logout"
+                    >
+                        ↪
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= PROFILE PAGE ================= -->
+
+            <section class="profile-page">
+
+                <div class="profile-container">
+
+                    <!-- PAGE HEADER -->
+
+                    <div class="profile-header">
+
+                        <div>
+
+                            <span class="profile-eyebrow">
+                                PROFILE
+                            </span>
+
+                            <h1>
+                                Personal Information
+                            </h1>
+
+                            <p>
+                                Manage your personal and contact details.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="profileMessage"
+                        class="profile-message"
+                    ></div>
+
+
+                    <!-- PERSONAL INFORMATION CARD -->
+
+                    <div class="personal-info-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <span class="card-eyebrow">
+                                    PERSONAL INFORMATION
+                                </span>
+
+                                <h2>
+                                    Your basic account information
+                                </h2>
+                            </div>
+
+                        </div>
+
+
+                        <form id="profileForm">
+
+                            <div class="profile-form-grid">
+
+                                <!-- FULL NAME -->
+
+                                <div class="profile-form-group">
+
+                                    <label for="fullName">
+                                        Full Name
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span class="input-icon">
+                                            👤
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="fullName"
+                                            name="fullName"
+                                            placeholder="Enter your full name"
+                                            autocomplete="name"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div class="profile-form-group">
+
+                                    <label for="email">
+                                        Email Address
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span class="input-icon">
+                                            ✉
+                                        </span>
+
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            placeholder="Enter your email"
+                                            autocomplete="email"
+                                            readonly
+                                        >
+
+                                    </div>
+
+                                    <small>
+                                        Email is managed by your account.
+                                    </small>
+
+                                </div>
+
+
+                                <!-- PHONE -->
+
+                                <div class="profile-form-group">
+
+                                    <label for="phone">
+                                        Phone Number
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span class="input-icon">
+                                            ☎
+                                        </span>
+
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            placeholder="+91 XXXXX XXXXX"
+                                            autocomplete="tel"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- LOCATION -->
+
+                                <div class="profile-form-group">
+
+                                    <label for="location">
+                                        Location
+                                    </label>
+
+                                    <div class="input-wrapper">
+
+                                        <span class="input-icon">
+                                            📍
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="location"
+                                            name="location"
+                                            value="Andhra Pradesh, India"
+                                            readonly
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SAVE BUTTON -->
+
+                            <div class="profile-form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="profile-save-btn"
+                                    id="saveProfileButton"
+                                >
+                                    ✓
+                                    <span>Save Changes</span>
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+
+</body>
+
+</html>
+

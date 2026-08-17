@@ -6,20 +6,13 @@ from rest_framework import status
 from parser.models import Resume
 from analyzer.models import ATSAnalysis
 
-from .services.recommender import (
-    generate_recommendations
-)
-
-from .serializers import (
-    RecommendationSerializer
-)
+from .services.recommender import generate_recommendations
+from .serializers import RecommendationSerializer
 
 
 class RecommendationView(APIView):
 
-    permission_classes = [
-        IsAuthenticated
-    ]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, resume_id):
 
@@ -28,10 +21,9 @@ class RecommendationView(APIView):
         # ======================================================
 
         try:
-
             resume = Resume.objects.get(
                 id=resume_id,
-                user=request.user,
+                user=request.user
             )
 
         except Resume.DoesNotExist:
@@ -39,9 +31,9 @@ class RecommendationView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": "Resume not found.",
+                    "message": "Resume not found."
                 },
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_404_NOT_FOUND
             )
 
         # ======================================================
@@ -49,7 +41,6 @@ class RecommendationView(APIView):
         # ======================================================
 
         try:
-
             ats_analysis = ATSAnalysis.objects.get(
                 resume=resume
             )
@@ -62,9 +53,9 @@ class RecommendationView(APIView):
                     "message": (
                         "ATS analysis not found. "
                         "Please analyze the resume first."
-                    ),
+                    )
                 },
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_404_NOT_FOUND
             )
 
         # ======================================================
@@ -73,17 +64,15 @@ class RecommendationView(APIView):
 
         try:
 
-            recommendations = (
-                generate_recommendations(
-                    resume,
-                    ats_analysis,
-                )
+            recommendations = generate_recommendations(
+                resume,
+                ats_analysis
             )
 
         except Exception as error:
 
             print(
-                "Recommendation generation error:",
+                "RECOMMENDATION GENERATION ERROR:",
                 error
             )
 
@@ -93,9 +82,9 @@ class RecommendationView(APIView):
                     "message": (
                         "Unable to generate recommendations."
                     ),
-                    "error": str(error),
+                    "error": str(error)
                 },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
         # ======================================================
@@ -116,7 +105,7 @@ class RecommendationView(APIView):
                 "message": (
                     "Recommendations generated successfully."
                 ),
-                "data": serializer.data,
+                "data": serializer.data
             },
-            status=status.HTTP_200_OK,
+            status=status.HTTP_200_OK
         )

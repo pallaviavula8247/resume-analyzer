@@ -8,9 +8,7 @@
    ========================================================= */
 
 if (!isAuthenticated()) {
-
     window.location.href = "login.html";
-
 }
 
 
@@ -19,99 +17,54 @@ if (!isAuthenticated()) {
    ========================================================= */
 
 const profileForm =
-    document.getElementById(
-        "profileForm"
-    );
+    document.getElementById("profileForm");
 
 const fullNameInput =
-    document.getElementById(
-        "fullName"
-    );
+    document.getElementById("fullName");
 
 const emailInput =
-    document.getElementById(
-        "email"
-    );
+    document.getElementById("email");
 
 const phoneInput =
-    document.getElementById(
-        "phone"
-    );
+    document.getElementById("phone");
 
 const profileMessage =
-    document.getElementById(
-        "profileMessage"
-    );
+    document.getElementById("profileMessage");
 
 const saveProfileButton =
-    document.getElementById(
-        "saveProfileButton"
-    );
-
-const profileAvatar =
-    document.getElementById(
-        "profileAvatar"
-    );
-
-const profileDisplayName =
-    document.getElementById(
-        "profileDisplayName"
-    );
-
-const profileDisplayEmail =
-    document.getElementById(
-        "profileDisplayEmail"
-    );
+    document.getElementById("saveProfileButton");
 
 const topbarAvatar =
-    document.getElementById(
-        "topbarAvatar"
-    );
+    document.getElementById("topbarAvatar");
 
 const topbarUserName =
-    document.getElementById(
-        "topbarUserName"
-    );
+    document.getElementById("topbarUserName");
 
 const topbarUserEmail =
-    document.getElementById(
-        "topbarUserEmail"
-    );
+    document.getElementById("topbarUserEmail");
 
 const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
+    document.getElementById("logoutButton");
 
 const menuButton =
-    document.getElementById(
-        "menuButton"
-    );
+    document.getElementById("menuButton");
 
 const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
+    document.getElementById("sidebar");
 
 
 /* =========================================================
    SHOW MESSAGE
    ========================================================= */
 
-function showMessage(
-    message,
-    type
-) {
+function showMessage(message, type) {
 
-    profileMessage.textContent =
-        message;
+    profileMessage.textContent = message;
 
     profileMessage.className =
         `profile-message ${type}`;
 
-    profileMessage.style.display =
-        "block";
-
+    profileMessage.style.display = "block";
 }
 
 
@@ -121,14 +74,17 @@ function showMessage(
 
 function hideMessage() {
 
-    profileMessage.style.display =
-        "none";
+    profileMessage.textContent = "";
 
+    profileMessage.className =
+        "profile-message";
+
+    profileMessage.style.display = "none";
 }
 
 
 /* =========================================================
-   SET USER UI
+   UPDATE USER UI
    ========================================================= */
 
 function updateUserUI(user) {
@@ -141,6 +97,10 @@ function updateUserUI(user) {
         user.email ||
         "";
 
+    const phone =
+        user.phone ||
+        "";
+
     const firstLetter =
         name
             .trim()
@@ -151,27 +111,11 @@ function updateUserUI(user) {
 
     /* Form */
 
-    fullNameInput.value =
-        name;
+    fullNameInput.value = name;
 
-    emailInput.value =
-        email;
+    emailInput.value = email;
 
-    phoneInput.value =
-        user.phone ||
-        "";
-
-
-    /* Profile card */
-
-    profileDisplayName.textContent =
-        name;
-
-    profileDisplayEmail.textContent =
-        email;
-
-    profileAvatar.textContent =
-        firstLetter;
+    phoneInput.value = phone;
 
 
     /* Topbar */
@@ -184,7 +128,6 @@ function updateUserUI(user) {
 
     topbarUserEmail.textContent =
         email;
-
 }
 
 
@@ -196,26 +139,39 @@ async function loadProfile() {
 
     try {
 
-        console.log(
-            "LOADING PROFILE..."
-        );
-
+        console.log("LOADING PROFILE...");
 
         const response =
-            await apiGet(
-                "/users/profile/"
-            );
-
+            await apiGet("/users/profile/");
 
         console.log(
             "PROFILE RESPONSE:",
             response
         );
 
+        /*
+         * Supports both:
+         *
+         * {
+         *   full_name: "...",
+         *   email: "..."
+         * }
+         *
+         * and:
+         *
+         * {
+         *   data: {
+         *      full_name: "...",
+         *      email: "..."
+         *   }
+         * }
+         */
 
-        updateUserUI(
-            response
-        );
+        const user =
+            response.data ||
+            response;
+
+        updateUserUI(user);
 
     }
 
@@ -226,15 +182,12 @@ async function loadProfile() {
             error
         );
 
-
         showMessage(
             error.message ||
             "Unable to load profile.",
             "error"
         );
-
     }
-
 }
 
 
@@ -248,7 +201,6 @@ profileForm.addEventListener(
 
         event.preventDefault();
 
-
         hideMessage();
 
 
@@ -259,6 +211,8 @@ profileForm.addEventListener(
             phoneInput.value.trim();
 
 
+        /* Validate name */
+
         if (!fullName) {
 
             showMessage(
@@ -266,17 +220,17 @@ profileForm.addEventListener(
                 "error"
             );
 
-            return;
+            fullNameInput.focus();
 
+            return;
         }
 
 
         /* Disable button */
 
-        saveProfileButton.disabled =
-            true;
+        saveProfileButton.disabled = true;
 
-        saveProfileButton.textContent =
+        saveProfileButton.innerHTML =
             "Saving...";
 
 
@@ -291,11 +245,8 @@ profileForm.addEventListener(
                 await apiPut(
                     "/users/profile/",
                     {
-                        full_name:
-                            fullName,
-
-                        phone:
-                            phone
+                        full_name: fullName,
+                        phone: phone
                     }
                 );
 
@@ -304,17 +255,6 @@ profileForm.addEventListener(
                 "PROFILE UPDATE RESPONSE:",
                 response
             );
-
-
-            /*
-             * Backend response:
-             *
-             * {
-             *   success: true,
-             *   message: "...",
-             *   data: {...}
-             * }
-             */
 
 
             const updatedUser =
@@ -353,12 +293,10 @@ profileForm.addEventListener(
 
         finally {
 
-            saveProfileButton.disabled =
-                false;
+            saveProfileButton.disabled = false;
 
-            saveProfileButton.textContent =
-                "Save Changes";
-
+            saveProfileButton.innerHTML =
+                "✓ <span>Save Changes</span>";
         }
 
     }
@@ -400,3 +338,4 @@ menuButton.addEventListener(
    ========================================================= */
 
 loadProfile();
+

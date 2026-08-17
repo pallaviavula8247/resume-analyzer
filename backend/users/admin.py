@@ -1,17 +1,22 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
+from .models import User
 
+
+# =========================================================
+# CUSTOM USER ADMIN
+# =========================================================
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+
     list_display = (
         "id",
         "full_name",
         "email",
         "phone",
         "is_active",
+        "is_staff",
         "date_joined",
     )
 
@@ -26,4 +31,7 @@ class UserAdmin(admin.ModelAdmin):
         "is_staff",
     )
 
-    ordering = ("-date_joined",)
+    ordering = (
+        "-date_joined",
+    )
+

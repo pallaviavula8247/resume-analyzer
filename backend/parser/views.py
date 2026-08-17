@@ -26,7 +26,9 @@ class ResumeUploadView(APIView):
 
     def post(self, request):
 
-        serializer = ResumeUploadSerializer(data=request.data)
+        serializer = ResumeUploadSerializer(
+            data=request.data
+        )
 
         if not serializer.is_valid():
             return Response(
@@ -39,21 +41,89 @@ class ResumeUploadView(APIView):
 
         try:
 
-            # Save Resume
-            resume = serializer.save(user=request.user)
+            # ==========================================
+            # 1. SAVE UPLOADED RESUME
+            # ==========================================
 
-            # Extract Text
+            resume = serializer.save(
+                user=request.user
+            )
+
+            print("\n==========================================")
+            print("NEW RESUME UPLOADED")
+            print("Resume ID:", resume.id)
+            print("File:", resume.resume_file.name)
+            print("User:", request.user.username)
+            print("==========================================")
+
+            # ==========================================
+            # 2. EXTRACT TEXT FROM THIS PDF
+            # ==========================================
+
             extracted_text = extract_text(
                 resume.resume_file.path
             )
 
-            # Parse Resume
+            # ==========================================
+            # DEBUG - SHOW EXTRACTED TEXT
+            # ==========================================
+
+            print("\n========== EXTRACTED RESUME TEXT ==========")
+            print(extracted_text)
+            print("========== END EXTRACTED TEXT ==========\n")
+
+            # ==========================================
+            # 3. CHECK EXTRACTION
+            # ==========================================
+
+            if not extracted_text or not extracted_text.strip():
+
+                return Response(
+                    {
+                        "success": False,
+                        "message": (
+                            "Unable to extract text from "
+                            "the uploaded resume."
+                        ),
+                        "resume_id": resume.id,
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # ==========================================
+            # 4. PARSE THIS RESUME TEXT
+            # ==========================================
+
             parsed_data = parse_resume(
                 extracted_text
             )
 
-            # Save Parsed Data
+            # ==========================================
+            # DEBUG - SHOW PARSED DATA
+            # ==========================================
+
+            print("\n========== PARSED RESUME DATA ==========")
+            print("Resume ID:", resume.id)
+            print("Full Name:", parsed_data.get("full_name"))
+            print("Email:", parsed_data.get("email"))
+            print("Phone:", parsed_data.get("phone"))
+            print("Skills:", parsed_data.get("skills"))
+            print("Education:", parsed_data.get("education"))
+            print("Experience:", parsed_data.get("experience"))
+            print("Projects:", parsed_data.get("projects"))
+            print("Certifications:", parsed_data.get("certifications"))
+            print("Languages:", parsed_data.get("languages"))
+            print("========================================\n")
+
+            # ==========================================
+            # 5. SAVE EXTRACTED TEXT
+            # ==========================================
+
             resume.extracted_text = extracted_text
+
+            # ==========================================
+            # 6. SAVE PERSONAL INFORMATION
+            # ==========================================
 
             resume.full_name = parsed_data.get(
                 "full_name",
@@ -90,6 +160,10 @@ class ResumeUploadView(APIView):
                 "",
             )
 
+            # ==========================================
+            # 7. SAVE RESUME SECTIONS
+            # ==========================================
+
             resume.skills = parsed_data.get(
                 "skills",
                 [],
@@ -120,6 +194,10 @@ class ResumeUploadView(APIView):
                 [],
             )
 
+            # ==========================================
+            # 8. SAVE ANALYSIS DATA
+            # ==========================================
+
             resume.ats_score = parsed_data.get(
                 "ats_score",
                 0,
@@ -135,12 +213,30 @@ class ResumeUploadView(APIView):
                 [],
             )
 
+            # ==========================================
+            # 9. SAVE EVERYTHING
+            # ==========================================
+
             resume.save()
+
+            print("\n==========================================")
+            print("RESUME SAVED SUCCESSFULLY")
+            print("Resume ID:", resume.id)
+            print("Name:", resume.full_name)
+            print("Skills:", resume.skills)
+            print("Experience:", resume.experience)
+            print("==========================================\n")
+
+            # ==========================================
+            # 10. RETURN RESPONSE
+            # ==========================================
 
             return Response(
                 {
                     "success": True,
-                    "message": "Resume uploaded successfully.",
+                    "message": (
+                        "Resume uploaded successfully."
+                    ),
                     "data": {
                         "resume_id": resume.id,
                         "parsed_data": parsed_data,
@@ -150,6 +246,11 @@ class ResumeUploadView(APIView):
             )
 
         except Exception as e:
+
+            print("\n==========================================")
+            print("RESUME UPLOAD ERROR")
+            print(str(e))
+            print("==========================================\n")
 
             return Response(
                 {
@@ -175,7 +276,9 @@ class ResumeListView(APIView):
 
         resumes = Resume.objects.filter(
             user=request.user
-        ).order_by("-uploaded_at")
+        ).order_by(
+            "-uploaded_at"
+        )
 
         serializer = ResumeSerializer(
             resumes,

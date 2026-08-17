@@ -1,0 +1,994 @@
+/* =========================================================
+   RESUME AI - PROFESSIONAL RECOMMENDATIONS THEME
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.recommendation-page {
+    padding: 34px 40px 60px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.recommendation-page .page-header {
+    position: relative;
+    padding: 34px 38px;
+    margin-bottom: 28px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827 0%,
+            #1e293b 50%,
+            #312e81 100%
+        );
+
+    color: #ffffff;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.16);
+}
+
+
+.recommendation-page .page-header::before {
+    content: "";
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -90px;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(129, 140, 248, 0.18);
+
+    filter: blur(4px);
+}
+
+
+.recommendation-page .page-header::after {
+    content: "✦";
+
+    position: absolute;
+
+    right: 42px;
+    bottom: 18px;
+
+    font-size: 80px;
+
+    color: rgba(255, 255, 255, 0.07);
+}
+
+
+.page-eyebrow {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    color: #c7d2fe;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.4px;
+
+    margin-bottom: 13px;
+}
+
+
+.recommendation-page .page-header h1 {
+    position: relative;
+
+    margin: 0 0 10px;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
+}
+
+
+.recommendation-page .page-header p {
+    position: relative;
+
+    max-width: 720px;
+
+    margin: 0;
+
+    color: #cbd5e1;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.recommendation-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+
+.summary-card {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-height: 125px;
+
+    padding: 23px 25px;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.summary-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #6366f1,
+            #8b5cf6
+        );
+}
+
+
+.summary-card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.10);
+}
+
+
+.summary-label {
+    color: #64748b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+
+    margin-bottom: 9px;
+}
+
+
+.summary-value {
+    color: #111827;
+
+    font-size: 29px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.recommendation-message {
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 13px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.recommendation-message.error {
+    background: #fef2f2;
+
+    border:
+        1px solid #fecaca;
+
+    color: #b91c1c;
+}
+
+
+.recommendation-message.info {
+    background: #eff6ff;
+
+    border:
+        1px solid #bfdbfe;
+
+    color: #1d4ed8;
+}
+
+
+.recommendation-message.success {
+    background: #f0fdf4;
+
+    border:
+        1px solid #bbf7d0;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.recommendation-loading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 180px;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    color: #6366f1;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+
+.recommendation-loading::before {
+    content: "";
+
+    width: 18px;
+    height: 18px;
+
+    margin-right: 12px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid #e0e7ff;
+
+    border-top-color: #6366f1;
+
+    animation:
+        recommendationSpin 0.8s linear infinite;
+}
+
+
+@keyframes recommendationSpin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.recommendation-section {
+    width: 100%;
+}
+
+
+.recommendation-section-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+
+.recommendation-section-header h2 {
+    margin: 0 0 6px;
+
+    color: #111827;
+
+    font-size: 23px;
+
+    font-weight: 800;
+}
+
+
+.recommendation-section-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RECOMMENDATION GRID
+   ========================================================= */
+
+.recommendation-grid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 30px;
+}
+
+
+/* =========================================================
+   GROUP
+   ========================================================= */
+
+.recommendation-group {
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.055);
+}
+
+
+.recommendation-group-header {
+    margin-bottom: 20px;
+
+    padding-bottom: 16px;
+
+    border-bottom:
+        1px solid #eef2f7;
+}
+
+
+.recommendation-group-header h2 {
+    margin: 0 0 6px;
+
+    color: #172033;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+
+.recommendation-group-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.recommendation-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.recommendation-card {
+    position: relative;
+
+    display: flex;
+
+    min-height: 150px;
+
+    overflow: hidden;
+
+    border-radius: 17px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 5px 18px rgba(15, 23, 42, 0.045);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.recommendation-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        #c7d2fe;
+
+    box-shadow:
+        0 14px 30px rgba(79, 70, 229, 0.10);
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.recommendation-number {
+    flex:
+        0 0 58px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    padding-top: 25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    color: #6366f1;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.recommendation-body {
+    flex: 1;
+
+    padding: 22px 22px 18px;
+}
+
+
+.recommendation-card-label {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 9px;
+
+    color: #6366f1;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.1px;
+}
+
+
+.recommendation-body h3 {
+    margin: 0 0 10px;
+
+    color: #172033;
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    line-height: 1.4;
+}
+
+
+.recommendation-body p {
+    margin: 5px 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+}
+
+
+.recommendation-body strong {
+    color: #334155;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.recommendation-card-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 17px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid #f1f5f9;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.recommendation-card-footer span:first-child {
+    color: #6366f1;
+}
+
+
+/* =========================================================
+   TECHNOLOGY TAGS
+   ========================================================= */
+
+.project-technologies {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 13px;
+}
+
+
+.technology-tag {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: #f1f5f9;
+
+    border:
+        1px solid #e2e8f0;
+
+    color: #475569;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ROADMAP
+   ========================================================= */
+
+.roadmap-group {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8faff
+        );
+}
+
+
+.learning-roadmap {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.roadmap-phase {
+    position: relative;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.roadmap-phase:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.07);
+}
+
+
+.roadmap-phase::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 17px;
+    bottom: 17px;
+
+    width: 3px;
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #6366f1,
+            #a78bfa
+        );
+}
+
+
+.roadmap-phase h3 {
+    margin: 0 0 13px;
+
+    padding-left: 10px;
+
+    color: #1e293b;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.roadmap-phase ul {
+    margin: 0;
+
+    padding-left: 27px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+.roadmap-phase li {
+    margin-bottom: 5px;
+}
+
+
+.roadmap-phase li::marker {
+    color: #6366f1;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.recommendation-empty {
+    max-width: 650px;
+
+    margin: 40px auto;
+
+    padding: 55px 35px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 12px 35px rgba(15, 23, 42, 0.07);
+}
+
+
+.recommendation-empty-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    color: #6366f1;
+
+    font-size: 30px;
+}
+
+
+.recommendation-empty h3 {
+    margin: 0 0 10px;
+
+    color: #1e293b;
+
+    font-size: 21px;
+
+    font-weight: 800;
+}
+
+
+.recommendation-empty p {
+    max-width: 480px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .recommendation-page {
+        padding: 28px 24px 45px;
+    }
+
+
+    .recommendation-cards {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .learning-roadmap {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 700px
+) {
+
+    .recommendation-page {
+        padding: 20px 15px 35px;
+    }
+
+
+    .recommendation-page .page-header {
+        padding: 26px 22px;
+
+        border-radius: 18px;
+    }
+
+
+    .recommendation-page .page-header h1 {
+        font-size: 27px;
+    }
+
+
+    .recommendation-page .page-header p {
+        font-size: 13px;
+    }
+
+
+    .recommendation-summary {
+        grid-template-columns:
+            1fr;
+
+        gap: 12px;
+    }
+
+
+    .summary-card {
+        min-height: 105px;
+    }
+
+
+    .recommendation-group {
+        padding: 17px;
+
+        border-radius: 17px;
+    }
+
+
+    .recommendation-group-header h2 {
+        font-size: 18px;
+    }
+
+
+    .recommendation-card {
+        min-height: 135px;
+    }
+
+
+    .recommendation-number {
+        flex-basis: 48px;
+
+        padding-top: 21px;
+    }
+
+
+    .recommendation-body {
+        padding: 18px 16px;
+    }
+
+
+    .recommendation-body h3 {
+        font-size: 15px;
+    }
+
+
+    .recommendation-body p {
+        font-size: 12px;
+    }
+
+
+    .recommendation-card-footer {
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (
+    max-width: 420px
+) {
+
+    .recommendation-page .page-header h1 {
+        font-size: 23px;
+    }
+
+
+    .recommendation-number {
+        flex-basis: 42px;
+
+        font-size: 11px;
+    }
+
+
+    .recommendation-body {
+        padding: 16px 13px;
+    }
+
+
+    .recommendation-card-label {
+        font-size: 9px;
+    }
+
+
+    .recommendation-body h3 {
+        font-size: 14px;
+    }
+
+}
+

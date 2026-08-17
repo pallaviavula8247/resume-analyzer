@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Resume AI - AI-powered resume analysis and career platform"
+    >
+
+    <title>Login | Resume AI</title>
+
+    <!-- =====================================================
+         GLOBAL CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <!-- =====================================================
+         AUTH CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../css/auth.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         AUTH PAGE
+         ===================================================== -->
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+
+            <!-- =================================================
+                 LEFT SIDE - BRAND
+                 ================================================= -->
+
+            <section class="auth-brand">
+
+                <!-- LOGO -->
+
+                <a
+                    href="../index.html"
+                    class="auth-logo"
+                >
+
+                    <span class="auth-logo-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        Resume AI
+                    </span>
+
+                </a>
+
+
+                <!-- BRAND CONTENT -->
+
+                <div class="auth-brand-content">
+
+                    <span class="auth-eyebrow">
+                        AI-POWERED CAREER PLATFORM
+                    </span>
+
+                    <h1>
+
+                        Build a
+
+                        <span>
+                            better career
+                        </span>
+
+                        with AI.
+
+                    </h1>
+
+                    <p>
+
+                        Analyze your resume, discover matching
+                        opportunities, improve your skills, and
+                        get personalized career recommendations.
+
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURES -->
+
+                <div class="auth-features">
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            AI-powered resume analysis
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            Smart job matching
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            Personalized recommendations
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- DECORATION -->
+
+                <div class="auth-decoration auth-decoration-one"></div>
+
+                <div class="auth-decoration auth-decoration-two"></div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE - LOGIN FORM
+                 ================================================= -->
+
+            <section class="auth-form-section">
+
+
+                <form
+                    id="loginForm"
+                    class="auth-form"
+                    novalidate
+                >
+
+
+                    <!-- FORM HEADER -->
+
+                    <div class="auth-form-header">
+
+                        <span class="auth-form-eyebrow">
+                            WELCOME BACK
+                        </span>
+
+                        <h2>
+                            Sign in to your account
+                        </h2>
+
+                        <p>
+                            Continue your career journey with
+                            Resume AI.
+                        </p>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         MESSAGE
+                         ================================================= -->
+
+                    <div
+                        id="loginMessage"
+                        class="auth-message"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+
+                    <!-- =================================================
+                         EMAIL
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="email"
+                        >
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PASSWORD
+                         ================================================= -->
+
+                    <div class="form-group">
+
+                        <div class="form-label-row">
+
+                            <label
+                                class="form-label"
+                                for="password"
+                            >
+                                Password
+                            </label>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         LOGIN BUTTON
+                         ================================================= -->
+
+                    <button
+                        type="submit"
+                        id="loginButton"
+                        class="auth-submit"
+                    >
+
+                        <span class="auth-submit-text">
+                            Sign In
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         REGISTER LINK
+                         ================================================= -->
+
+                    <div class="auth-footer">
+
+                        <span>
+                            Don't have an account?
+                        </span>
+
+                        <a href="register.html">
+                            Create account
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         API MUST LOAD FIRST
+         ===================================================== -->
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/login.js"></script>
+
+
+</body>
+
+</html>
+

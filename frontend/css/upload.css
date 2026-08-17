@@ -1,0 +1,806 @@
+/* =========================================================
+   RESUME AI - PROFESSIONAL UPLOAD PAGE
+   Purple / Blue AI SaaS Theme
+   ========================================================= */
+
+:root {
+    --upload-purple: #6d5dfc;
+    --upload-purple-dark: #5545e8;
+    --upload-blue: #3b82f6;
+    --upload-indigo: #6366f1;
+
+    --upload-bg: #f6f7ff;
+    --upload-card: #ffffff;
+
+    --upload-text: #17172f;
+    --upload-muted: #73758c;
+
+    --upload-border: #e6e7f2;
+
+    --upload-shadow:
+        0 20px 60px rgba(79, 70, 229, 0.08);
+
+    --upload-radius: 22px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.upload-content {
+    min-height: calc(100vh - 70px);
+    padding: 42px 42px 60px;
+
+    background:
+        radial-gradient(
+            circle at 85% 5%,
+            rgba(109, 93, 252, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(59, 130, 246, 0.06),
+            transparent 25%
+        ),
+        var(--upload-bg);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+    max-width: 1250px;
+    margin: 0 auto 30px;
+}
+
+.page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    background: #eeecff;
+    color: var(--upload-purple);
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.page-eyebrow::before {
+    content: "✦";
+    font-size: 12px;
+}
+
+.page-header h1 {
+    margin-top: 12px;
+
+    color: var(--upload-text);
+
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+}
+
+.page-header p {
+    max-width: 650px;
+    margin-top: 10px;
+
+    color: var(--upload-muted);
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.upload-layout {
+    width: min(1250px, 100%);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.8fr);
+
+    gap: 24px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   UPLOAD CARD
+   ========================================================= */
+
+.upload-card {
+    position: relative;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fbfbff
+        );
+
+    border: 1px solid var(--upload-border);
+    border-radius: var(--upload-radius);
+
+    box-shadow: var(--upload-shadow);
+}
+
+.upload-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 30px;
+    right: 30px;
+
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--upload-purple),
+            var(--upload-blue)
+        );
+
+    border-radius: 0 0 10px 10px;
+}
+
+
+/* =========================================================
+   DROP ZONE
+   ========================================================= */
+
+.drop-zone {
+    min-height: 390px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 45px 30px;
+
+    border: 2px dashed #cfd0ed;
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(109, 93, 252, 0.055),
+            transparent 65%
+        );
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: var(--upload-purple);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(109, 93, 252, 0.09),
+            rgba(59, 130, 246, 0.06)
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(109, 93, 252, 0.12),
+        0 10px 35px rgba(109, 93, 252, 0.08);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   UPLOAD ICON
+   ========================================================= */
+
+.upload-icon {
+    width: 78px;
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ede9ff,
+            #e8efff
+        );
+
+    color: var(--upload-purple);
+
+    font-size: 32px;
+    font-weight: 800;
+
+    box-shadow:
+        0 12px 30px rgba(109, 93, 252, 0.14);
+}
+
+.drop-zone h2 {
+    color: var(--upload-text);
+
+    font-size: 22px;
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+}
+
+.drop-zone > p {
+    margin: 7px 0 13px;
+
+    color: var(--upload-muted);
+
+    font-size: 14px;
+}
+
+.file-requirement {
+    display: block;
+
+    margin-top: 15px;
+
+    color: #999bb0;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.upload-card .btn-primary {
+    min-height: 46px;
+
+    padding: 0 22px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--upload-purple),
+            var(--upload-indigo)
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 10px 25px rgba(109, 93, 252, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.upload-card .btn-primary:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.03);
+
+    box-shadow:
+        0 14px 30px rgba(109, 93, 252, 0.30);
+}
+
+
+/* =========================================================
+   SELECTED FILE
+   ========================================================= */
+
+.selected-file {
+    margin-top: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 15px 17px;
+
+    border: 1px solid #dddaf8;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf9ff,
+            #f5f8ff
+        );
+}
+
+.file-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #ede9ff;
+    color: var(--upload-purple);
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.file-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.file-info strong {
+    overflow: hidden;
+
+    color: var(--upload-text);
+
+    font-size: 14px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-info span {
+    color: var(--upload-muted);
+    font-size: 12px;
+}
+
+.remove-file {
+    width: 32px;
+    height: 32px;
+
+    margin-left: auto;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: #fff0f2;
+    color: #e54866;
+
+    font-size: 20px;
+
+    transition: 0.2s ease;
+}
+
+.remove-file:hover {
+    background: #ffe2e7;
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.upload-message {
+    margin-top: 16px;
+
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.upload-message.error {
+    color: #b4233c;
+
+    background: #fff1f3;
+
+    border: 1px solid #ffd0d8;
+}
+
+.upload-message.success {
+    color: #087443;
+
+    background: #ecfdf5;
+
+    border: 1px solid #b7efd3;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.progress-container {
+    margin-top: 20px;
+
+    padding: 17px;
+
+    border: 1px solid #e3e4f2;
+    border-radius: 14px;
+
+    background: #fafaff;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    color: var(--upload-muted);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#progressText {
+    color: var(--upload-purple);
+}
+
+.progress-track {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #e9eaf3;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--upload-purple),
+            var(--upload-blue)
+        );
+
+    transition: width 0.25s ease;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.upload-submit {
+    width: 100%;
+
+    min-height: 52px;
+
+    margin-top: 22px;
+
+    border: 0;
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d5dfc,
+            #4f7df5
+        );
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    box-shadow:
+        0 12px 28px rgba(79, 70, 229, 0.22);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.upload-submit:not(:disabled):hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 34px rgba(79, 70, 229, 0.28);
+}
+
+.upload-submit:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.48;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+   ========================================================= */
+
+.info-card {
+    position: relative;
+
+    padding: 27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #17162e,
+            #24214a
+        );
+
+    color: white;
+
+    border-radius: var(--upload-radius);
+
+    box-shadow:
+        0 22px 50px rgba(30, 25, 80, 0.20);
+
+    overflow: hidden;
+}
+
+.info-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -80px;
+    right: -70px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(126, 110, 255, 0.38),
+            transparent 70%
+        );
+}
+
+.info-card h3 {
+    position: relative;
+
+    margin-bottom: 25px;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   INFO ITEMS
+   ========================================================= */
+
+.info-item {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 45px 1fr;
+
+    gap: 14px;
+
+    padding: 17px 0;
+
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+
+.info-item:last-child {
+    border-bottom: 0;
+}
+
+.info-number {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 124, 255, 0.25),
+            rgba(79, 125, 245, 0.18)
+        );
+
+    color: #b9b0ff;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.info-item strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.info-item p {
+    color: #b7b6cb;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+   ========================================================= */
+
+.security-note {
+    width: min(1250px, 100%);
+
+    margin: 20px auto 0;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 16px 19px;
+
+    border: 1px solid #e4e5f1;
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.75);
+
+    box-shadow:
+        0 8px 25px rgba(79,70,229,0.04);
+}
+
+.security-note > span {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eeecff;
+
+    font-size: 17px;
+}
+
+.security-note strong {
+    display: block;
+
+    color: var(--upload-text);
+
+    font-size: 13px;
+}
+
+.security-note p {
+    margin-top: 2px;
+
+    color: var(--upload-muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SIDEBAR ACTIVE STATE
+   ========================================================= */
+
+.sidebar .nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(109, 93, 252, 0.16),
+            rgba(109, 93, 252, 0.06)
+        ) !important;
+
+    color: var(--upload-purple) !important;
+
+    border-right: 3px solid var(--upload-purple);
+}
+
+.sidebar .nav-item.active .nav-icon {
+    color: var(--upload-purple);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .upload-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .info-card {
+        min-height: auto;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .upload-content {
+        padding: 25px 18px 40px;
+    }
+
+    .upload-card {
+        padding: 16px;
+    }
+
+    .drop-zone {
+        min-height: 330px;
+        padding: 30px 18px;
+    }
+
+    .drop-zone h2 {
+        font-size: 19px;
+    }
+
+    .upload-icon {
+        width: 68px;
+        height: 68px;
+    }
+
+    .security-note {
+        align-items: flex-start;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .selected-file {
+        padding: 12px;
+    }
+
+    .info-card {
+        padding: 21px;
+    }
+}

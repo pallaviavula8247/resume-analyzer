@@ -1,102 +1,221 @@
 """
-Resume Strengths & Weaknesses Analyzer
+Resume Strength and Weakness Analysis
 """
 
 
 def analyze_strengths(resume):
-    """
-    Analyze resume strengths, weaknesses, and missing skills.
-    """
 
     strengths = []
     weaknesses = []
     missing_skills = []
 
-    # -----------------------------
-    # Personal Information
-    # -----------------------------
-    if resume.linkedin:
-        strengths.append("LinkedIn profile added")
-    else:
-        weaknesses.append("LinkedIn profile is missing")
+    # ========================================================
+    # SKILLS
+    # ========================================================
 
-    if resume.github:
-        strengths.append("GitHub profile added")
-    else:
-        weaknesses.append("GitHub profile is missing")
+    skills = getattr(
+        resume,
+        "skills",
+        []
+    )
 
-    if resume.portfolio:
-        strengths.append("Portfolio website available")
-    else:
-        weaknesses.append("Portfolio website is missing")
+    if isinstance(skills, dict):
 
-    # -----------------------------
-    # Skills
-    # -----------------------------
-    skill_count = len(resume.skills)
+        skills = list(
+            skills.keys()
+        )
 
-    if skill_count >= 8:
-        strengths.append("Strong technical skill set")
-    elif skill_count >= 5:
-        strengths.append("Good technical skills")
-    else:
-        weaknesses.append("Add more technical skills")
+    elif isinstance(skills, str):
 
-    # -----------------------------
-    # Education
-    # -----------------------------
-    if resume.education:
-        strengths.append("Education details included")
-    else:
-        weaknesses.append("Education section missing")
+        skills = [
+            skill.strip()
+            for skill in skills.split(",")
+            if skill.strip()
+        ]
 
-    # -----------------------------
-    # Experience
-    # -----------------------------
-    if resume.experience:
-        strengths.append("Work experience included")
-    else:
-        weaknesses.append("Work experience not provided")
+    elif not isinstance(skills, list):
 
-    # -----------------------------
-    # Projects
-    # -----------------------------
-    if resume.projects:
-        strengths.append("Projects showcase practical experience")
-    else:
-        weaknesses.append("Projects section missing")
+        skills = []
 
-    # -----------------------------
-    # Certifications
-    # -----------------------------
-    if resume.certifications:
-        strengths.append("Certifications included")
-    else:
-        weaknesses.append("No certifications found")
 
-    # -----------------------------
-    # Common ATS Skills
-    # -----------------------------
-    required_skills = [
-        "Python",
-        "SQL",
-        "Git",
-        "Docker",
-        "REST API",
+    skills = [
+        str(skill).strip()
+        for skill in skills
+        if str(skill).strip()
     ]
 
-    resume_skills = {
+
+    # ========================================================
+    # STRENGTHS
+    # ========================================================
+
+    if skills:
+
+        strengths.append(
+            f"Resume contains {len(skills)} technical skills."
+        )
+
+        if any(
+            skill.lower() == "python"
+            for skill in skills
+        ):
+
+            strengths.append(
+                "Python is included in the technical skill set."
+            )
+
+        if any(
+            skill.lower() == "django"
+            for skill in skills
+        ):
+
+            strengths.append(
+                "Django experience supports backend development roles."
+            )
+
+        if any(
+            skill.lower() == "react"
+            for skill in skills
+        ):
+
+            strengths.append(
+                "React experience supports frontend development roles."
+            )
+
+    else:
+
+        weaknesses.append(
+            "Technical skills could not be identified clearly."
+        )
+
+
+    # ========================================================
+    # EDUCATION
+    # ========================================================
+
+    education = getattr(
+        resume,
+        "education",
+        None
+    )
+
+    if education:
+
+        strengths.append(
+            "Education information is available in the resume."
+        )
+
+    else:
+
+        weaknesses.append(
+            "Education information should be clearly included."
+        )
+
+
+    # ========================================================
+    # EXPERIENCE
+    # ========================================================
+
+    experience = getattr(
+        resume,
+        "experience",
+        None
+    )
+
+    if experience:
+
+        strengths.append(
+            "Professional or practical experience is present."
+        )
+
+    else:
+
+        weaknesses.append(
+            "Add relevant internship, work, or practical experience."
+        )
+
+
+    # ========================================================
+    # PROJECTS
+    # ========================================================
+
+    projects = getattr(
+        resume,
+        "projects",
+        None
+    )
+
+    if projects:
+
+        strengths.append(
+            "Projects provide practical evidence of technical skills."
+        )
+
+    else:
+
+        weaknesses.append(
+            "Add relevant technical projects with measurable results."
+        )
+
+
+    # ========================================================
+    # COMMON MISSING SKILLS
+    # ========================================================
+
+    skill_text = " ".join(
         skill.lower()
-        for skill in resume.skills
-    }
+        for skill in skills
+    )
 
-    for skill in required_skills:
 
-        if skill.lower() not in resume_skills:
-            missing_skills.append(skill)
+    important_skills = [
+        "python",
+        "sql",
+        "git",
+        "rest api",
+        "django",
+        "react",
+    ]
+
+
+    for skill in important_skills:
+
+        if skill not in skill_text:
+
+            missing_skills.append(
+                skill
+            )
+
+
+    # ========================================================
+    # DEFAULT STRENGTH
+    # ========================================================
+
+    if not strengths:
+
+        strengths.append(
+            "Resume contains useful information for analysis."
+        )
+
+
+    # ========================================================
+    # DEFAULT WEAKNESS
+    # ========================================================
+
+    if not weaknesses:
+
+        weaknesses.append(
+            "Continue improving measurable achievements and job-specific keywords."
+        )
+
 
     return {
+
         "strengths": strengths,
+
         "weaknesses": weaknesses,
+
         "missing_skills": missing_skills,
+
     }
+
