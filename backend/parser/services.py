@@ -1,8 +1,17 @@
 """
 Resume Parsing Service
 
-Combines all parser modules and returns
-structured resume information.
+Responsible ONLY for extracting structured information
+from the text of the uploaded resume.
+
+This module must NOT:
+- calculate ATS scores
+- generate job matches
+- generate recommendations
+- invent missing skills
+- insert default resume data
+
+The uploaded resume is the single source of truth.
 """
 
 from parser.parsers.personal import extract_personal_info
@@ -14,200 +23,93 @@ from parser.parsers.certifications import extract_certifications
 from parser.parsers.languages import extract_languages
 
 
-def calculate_ats_score(
-    skills,
-    education,
-    experience,
-    projects,
-    certifications,
-):
-    """
-    Calculate a basic ATS score.
-    """
-
-    score = 0
-
-    # Skills (40 Marks)
-
-    score += min(len(skills) * 4, 40)
-
-    # Education (20 Marks)
-
-    if education:
-        score += 20
-
-    # Experience (15 Marks)
-
-    if experience:
-        score += 15
-
-    # Projects (15 Marks)
-
-    if projects:
-        score += 15
-
-    # Certifications (10 Marks)
-
-    if certifications:
-        score += 10
-
-    return min(score, 100)
-
-
-def get_missing_skills(skills):
-    """
-    Placeholder for future Job Matching.
-    """
-
-    REQUIRED_SKILLS = [
-        "Python",
-        "SQL",
-        "Git",
-        "REST API",
-        "Docker",
-    ]
-
-    missing = []
-
-    for skill in REQUIRED_SKILLS:
-
-        if skill not in skills:
-            missing.append(skill)
-
-    return missing
-
-
-def generate_recommendations(
-    ats_score,
-    missing_skills,
-    projects,
-    certifications,
-):
-    """
-    Generate resume recommendations.
-    """
-
-    recommendations = []
-
-    if ats_score < 60:
-
-        recommendations.append(
-            "Improve your resume by adding more technical skills."
-        )
-
-    if missing_skills:
-
-        recommendations.append(
-            "Learn these important skills: "
-            + ", ".join(missing_skills)
-        )
-
-    if not projects:
-
-        recommendations.append(
-            "Include academic or personal projects."
-        )
-
-    if not certifications:
-
-        recommendations.append(
-            "Add professional certifications."
-        )
-
-    if ats_score >= 80:
-
-        recommendations.append(
-            "Excellent resume. Keep it updated."
-        )
-
-    return recommendations
-
-
 def parse_resume(text):
     """
-    Parse complete resume.
+    Parse the actual extracted resume text.
+
+    This function ONLY extracts information that exists
+    in the uploaded resume.
+
+    Args:
+        text (str):
+            Text extracted from the uploaded PDF.
+
+    Returns:
+        dict:
+            Structured resume information.
     """
 
-    # -----------------------------
-    # Personal Information
-    # -----------------------------
+    # =========================================================
+    # EMPTY RESUME CHECK
+    # =========================================================
+
+    if not text or not text.strip():
+
+        return {
+            "full_name": "",
+            "email": "",
+            "phone": "",
+            "location": "",
+            "linkedin": "",
+            "github": "",
+            "portfolio": "",
+            "skills": [],
+            "education": [],
+            "experience": [],
+            "projects": [],
+            "certifications": [],
+            "languages": [],
+        }
+
+    # =========================================================
+    # PERSONAL INFORMATION
+    # =========================================================
 
     personal = extract_personal_info(text)
 
-    # -----------------------------
-    # Skills
-    # -----------------------------
+    # =========================================================
+    # SKILLS
+    # =========================================================
 
     skills = extract_skills(text)
 
-    # -----------------------------
-    # Education
-    # -----------------------------
+    # =========================================================
+    # EDUCATION
+    # =========================================================
 
     education = extract_education(text)
 
-    # -----------------------------
-    # Experience
-    # -----------------------------
+    # =========================================================
+    # EXPERIENCE
+    # =========================================================
 
     experience = extract_experience(text)
 
-    # -----------------------------
-    # Projects
-    # -----------------------------
+    # =========================================================
+    # PROJECTS
+    # =========================================================
 
     projects = extract_projects(text)
 
-    # -----------------------------
-    # Certifications
-    # -----------------------------
+    # =========================================================
+    # CERTIFICATIONS
+    # =========================================================
 
     certifications = extract_certifications(text)
 
-    # -----------------------------
-    # Languages
-    # -----------------------------
+    # =========================================================
+    # LANGUAGES
+    # =========================================================
 
     languages = extract_languages(text)
 
-    # -----------------------------
-    # ATS Score
-    # -----------------------------
-
-    ats_score = calculate_ats_score(
-        skills,
-        education,
-        experience,
-        projects,
-        certifications,
-    )
-
-    # -----------------------------
-    # Missing Skills
-    # -----------------------------
-
-    missing_skills = get_missing_skills(
-        skills
-    )
-
-    # -----------------------------
-    # AI Recommendations
-    # -----------------------------
-
-    recommendations = generate_recommendations(
-        ats_score,
-        missing_skills,
-        projects,
-        certifications,
-    )
-
-    # -----------------------------
-    # Final JSON
-    # -----------------------------
+    # =========================================================
+    # RETURN ONLY EXTRACTED DATA
+    # =========================================================
 
     return {
 
-        # Personal Information
+        # Personal information
         "full_name": personal.get(
             "full_name",
             "",
@@ -243,7 +145,7 @@ def parse_resume(text):
             "",
         ),
 
-        # Resume Sections
+        # Resume sections
         "skills": skills,
 
         "education": education,
@@ -255,11 +157,4 @@ def parse_resume(text):
         "certifications": certifications,
 
         "languages": languages,
-
-        # Analysis
-        "ats_score": ats_score,
-
-        "missing_skills": missing_skills,
-
-        "recommendations": recommendations,
     }
